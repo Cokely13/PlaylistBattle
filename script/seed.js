@@ -1,6 +1,7 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
+const {db, models: {User, Song} } = require('../server/db')
+const fetch = require('node-fetch');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -15,6 +16,25 @@ async function seed() {
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
   ])
+
+
+  const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
+  const PAGE_SIZE = 50;
+  const TOTAL_TRACKS = 100;
+  const url = `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${API_KEY}&format=json&limit=${PAGE_SIZE}`;
+
+  for (let page = 1; page <= TOTAL_TRACKS / PAGE_SIZE; page++) {
+    const pageUrl = `${url}&page=${page}`;
+    const response = await fetch(pageUrl);
+    const data = await response.json();
+
+    for (const track of data.tracks.track) {
+      const name = track.name;
+      const artist = track.artist.name;
+
+      await Song.create({ name, artist });
+    }
+  }
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
