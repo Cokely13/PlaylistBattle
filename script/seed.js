@@ -19,8 +19,8 @@ async function seed() {
 
 
   const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
-  const PAGE_SIZE = 50;
-  const TOTAL_TRACKS = 100;
+  const PAGE_SIZE = 1000
+  const TOTAL_TRACKS = 1000
   const url = `http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${API_KEY}&format=json&limit=${PAGE_SIZE}`;
 
   for (let page = 1; page <= TOTAL_TRACKS / PAGE_SIZE; page++) {
