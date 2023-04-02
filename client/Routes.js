@@ -4,6 +4,7 @@ import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import SongList from './components/SongList';
+import PlaylistCreator from './components/PlaylistCreator';
 import {me} from './store'
 
 /**
@@ -23,6 +24,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/songs" component={SongList} />
+            <Route path="/create" component={PlaylistCreator} />
             <Redirect to="/home" />
           </Switch>
         ) : (
