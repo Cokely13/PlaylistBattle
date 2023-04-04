@@ -14,21 +14,19 @@ Playlist.belongsTo(User)
 Playlist.belongsToMany(Song, { through: 'PlaylistSong' });
 Song.belongsToMany(Playlist, { through: 'PlaylistSong' });
 
-// Playlist.hasMany(Song, {
-//   foreignKey: 'playlistId',
-//   as: 'songs', // name of the association
-// });
+PlaylistSong.belongsTo(Playlist);
+Playlist.hasMany(PlaylistSong)
+PlaylistSong.belongsTo(Song, { foreignKey: 'songId' });
+Song.hasMany(PlaylistSong, { foreignKey: 'songId' })
 
-// Song.belongsTo(Playlist, {
-//   foreignKey: 'playlistId',
-//   as: 'playlist',
-// });
+
 
 module.exports = {
   db,
   models: {
     User,
     Song,
+    Playlist,
     PlaylistSong
   },
 }

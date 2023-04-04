@@ -4,7 +4,10 @@ module.exports = router;
 
 router.get('/', async (req, res, next) => {
   try {
-    const playlistSongs = await PlaylistSong.findAll()
+    const playlistSongs = await PlaylistSong.findAll({
+      include: [Song, Playlist]
+    }
+    )
     res.json(playlistSongs)
   } catch (err) {
     next(err)
@@ -12,23 +15,12 @@ router.get('/', async (req, res, next) => {
 })
 
 
-router.get('/:id/songs', async (req, res, next) => {
-  try {
-    const playlist = await Playlist.findByPk(req.params.id);
-    res.json(playlist.songs);
-  } catch (err) {
-    next(err);
-  }
-});
 
-router.post('/:id/songs', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const playlist = await Playlist.findByPk(req.params.id);
-    const song = await Song.findByPk(req.body.songId);
-    await playlist.addSong(song, { through: { sequence: req.body.sequence, duration: req.body.duration } });
-    res.sendStatus(201);
-  } catch (err) {
-    next(err);
+    res.status(201).send(await PlaylistSong.create(req.body));
+  } catch (error) {
+    next(error);
   }
 });
 

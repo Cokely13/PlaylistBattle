@@ -1,11 +1,15 @@
 import React, { useState, useEffect  } from 'react';
 import { useSelector , useDispatch} from 'react-redux';
-import { createPlaylist } from '../store/allPlaylistsStore';
+import { createPlaylist, fetchPlaylists  } from '../store/allPlaylistsStore';
 import { fetchSongs } from '../store/allSongsStore';
+import {createPsong, deletePsong} from '../store/allPsongsStore'
+
 
 function PlaylistCreator() {
   const dispatch = useDispatch()
   const allSongs = useSelector((state) => state.allSongs );
+  const allPlaylists = useSelector((state) => state.allPlaylists );
+  // const [createdPlaylistId, setCreatedPlaylistId] = useState(null);
   const [playlistName, setPlaylistName] = useState('');
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [playlistCreated, setPlaylistCreated] = useState(false);
@@ -15,25 +19,38 @@ function PlaylistCreator() {
     dispatch(fetchSongs())
   }, [])
 
+  useEffect(() => {
+    dispatch(fetchPlaylists())
+  }, [])
+
   const handleNameChange = (event) => {
     setPlaylistName(event.target.value);
   };
 
   const handleAddSong = (song) => {
     setSelectedSongs([...selectedSongs, song]);
+    const thisPlaylist = allPlaylists.filter((playlist) => playlist.name == playlistName)
+    const newSong = {
+      playlistId: thisPlaylist[0].id,
+      songId: song.id
+    }
+    // console.log("new", thisPlaylist)
+    // console.log("song", newSong)
+    dispatch(createPsong(newSong))
   };
 
   const handleRemoveSong = (song) => {
     setSelectedSongs(selectedSongs.filter((selectedSong) => selectedSong.id !== song.id));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit =  (event) => {
     event.preventDefault();
     const newPlaylist = {
       name: playlistName,
       userId: id
-    }
+    };
     dispatch(createPlaylist(newPlaylist));
+    // setCreatedPlaylistId(createdPlaylist.id);
     setPlaylistCreated(true);
   };
 
