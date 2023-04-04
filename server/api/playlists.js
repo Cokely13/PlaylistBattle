@@ -1,17 +1,15 @@
 const router = require('express').Router()
-const { models: { Playlist, Song}} = require('../db')
+const { models: { Playlist, Song, User}} = require('../db')
 module.exports = router
 
 
 router.get('/', async (req, res, next) => {
   try {
     const playlists = await Playlist.findAll({
-      include: [
-        {
-          model: Song,
-          as: 'songs',
-          include:  { model: Song, as: 'versus' },
-        },
+      include: [ Song,   {
+        model: User,
+        attributes: ['id', 'username'],
+      },
       ],
     })
     res.json(playlists)
@@ -44,11 +42,10 @@ router.get('/:id', async (req, res, next) => {
   try {
     const playlists = await Playlist.findByPk(req.params.id, {
       include: [
-        {
-          model: Song,
-          as: 'songs',
-          include: [{ model: Vote, as: 'songVotes' }, { model: Song, as: 'versus' }],
-        },
+       Song,  {
+        model: User,
+        attributes: ['id', 'username'],
+      },
       ],
     })
   ;

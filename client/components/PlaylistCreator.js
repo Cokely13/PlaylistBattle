@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch} from 'react-redux';
+import { createPlaylist } from '../store/allPlaylistsStore';
+
 
 function PlaylistCreator() {
+  const dispatch = useDispatch()
   const allSongs = useSelector((state) => state.allSongs );
   const [playlistName, setPlaylistName] = useState('');
   const [selectedSongs, setSelectedSongs] = useState([]);
+  const {id} = useSelector((state) => state.auth )
 
   const handleNameChange = (event) => {
     setPlaylistName(event.target.value);
@@ -20,7 +24,11 @@ function PlaylistCreator() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: Create the playlist using the playlistName and selectedSongs
+    const newPlaylist = {
+      name: playlistName,
+      userId: id
+    }
+    dispatch(createPlaylist(newPlaylist))
   };
 
   const alphabeticallySortByField = (field) => {

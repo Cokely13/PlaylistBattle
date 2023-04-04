@@ -13,7 +13,7 @@ const Playlist = db.define('playlist', {
         type: Sequelize.STRING,
         unique: true
     },
-    createdBy: {
+    userId: {
       type: Sequelize.INTEGER,
   },
   wins: {

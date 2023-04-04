@@ -1,16 +1,18 @@
 const router = require('express').Router()
-const { models: { Song, Playlist}} = require('../db')
+const { models: { Song, Playlist }} = require('../db')
 module.exports = router
 
 
 router.get('/', async (req, res, next) => {
   try {
-    const songs = await Song.findAll()
-    res.json(songs)
+    const songs = await Song.findAll({
+      include: Playlist,
+    });
+    res.json(songs);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 //POST: add a new Song
 router.post("/", async (req, res, next) => {
@@ -33,13 +35,14 @@ router.put('/:id', async (req, res, next) => {
 //Get read all songs
 router.get('/:id', async (req, res, next) => {
   try {
-    const songs = await Song.findByPk(req.params.id)
-  ;
-    res.json(songs)
+    const song = await Song.findByPk(req.params.id, {
+      include: Playlist,
+    });
+    res.json(song);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 router.delete('/:id', async (req, res, next) => {
   try {

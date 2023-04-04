@@ -7,15 +7,21 @@ const Playlist = require('./models/Playlist')
 const User = require('./models/User')
 
 //associations could go here!
-Playlist.hasMany(Song, {
-  foreignKey: 'playlistId',
-  as: 'songs', // name of the association
-});
+User.hasMany(Playlist)
+Playlist.belongsTo(User)
 
-Song.belongsTo(Playlist, {
-  foreignKey: 'playlistId',
-  as: 'playlist',
-});
+Playlist.belongsToMany(Song, { through: 'PlaylistSongs' });
+Song.belongsToMany(Playlist, { through: 'PlaylistSongs' });
+
+// Playlist.hasMany(Song, {
+//   foreignKey: 'playlistId',
+//   as: 'songs', // name of the association
+// });
+
+// Song.belongsTo(Playlist, {
+//   foreignKey: 'playlistId',
+//   as: 'playlist',
+// });
 
 module.exports = {
   db,
