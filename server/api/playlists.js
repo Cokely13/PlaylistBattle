@@ -58,7 +58,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const playlists = await Playlist.findByPk(req.params.id, {
       include: [
-       Song,  {
+        { model: PlaylistSong, include: [ Song ] },  {
         model: User,
         attributes: ['id', 'username'],
       },

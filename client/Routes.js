@@ -7,6 +7,7 @@ import SongList from './components/SongList';
 import PlaylistCreator from './components/PlaylistCreator';
 import AllPlayLists from './components/AllPlaylists';
 import {me} from './store'
+import PlayListDetails from './components/PlayListDetails';
 
 /**
  * COMPONENT
@@ -23,10 +24,11 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
-            <Route path="/playlists" component={AllPlayLists} />
-            <Route path="/songs" component={SongList} />
-            <Route path="/create" component={PlaylistCreator} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/playlists" component={AllPlayLists} />
+            <Route exact path="/playlists/:playlistId" component={PlayListDetails} />
+            <Route exact path="/songs" component={SongList} />
+            <Route exact path="/create" component={PlaylistCreator} />
             <Redirect to="/home" />
           </Switch>
         ) : (
