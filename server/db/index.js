@@ -3,6 +3,7 @@
 const db = require('./db')
 const Song = require('./models/Song')
 const Playlist = require('./models/Playlist')
+const PlaylistSong = require('./models/PlaylistSong')
 
 const User = require('./models/User')
 
@@ -10,8 +11,8 @@ const User = require('./models/User')
 User.hasMany(Playlist)
 Playlist.belongsTo(User)
 
-Playlist.belongsToMany(Song, { through: 'PlaylistSongs' });
-Song.belongsToMany(Playlist, { through: 'PlaylistSongs' });
+Playlist.belongsToMany(Song, { through: 'PlaylistSong' });
+Song.belongsToMany(Playlist, { through: 'PlaylistSong' });
 
 // Playlist.hasMany(Song, {
 //   foreignKey: 'playlistId',
@@ -28,6 +29,6 @@ module.exports = {
   models: {
     User,
     Song,
-    Playlist
+    PlaylistSong
   },
 }
