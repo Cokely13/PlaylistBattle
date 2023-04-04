@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import SongList from './components/SongList';
 import PlaylistCreator from './components/PlaylistCreator';
+import AllPlayLists from './components/AllPlaylists';
 import {me} from './store'
 
 /**
@@ -23,6 +24,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
+            <Route path="/playlists" component={AllPlayLists} />
             <Route path="/songs" component={SongList} />
             <Route path="/create" component={PlaylistCreator} />
             <Redirect to="/home" />
