@@ -24,7 +24,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put('/:id/songs/:songId', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const playlistSong = await PlaylistSong.findOne({
       where: {
@@ -39,17 +39,14 @@ router.put('/:id/songs/:songId', async (req, res, next) => {
   }
 });
 
-router.delete('/:id/songs/:songId', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
-    const playlistSong = await PlaylistSong.findOne({
-      where: {
-        playlistId: req.params.id,
-        songId: req.params.songId,
-      },
-    });
+    const playlistSong = await PlaylistSong.findByPk(req.params.id);
     await playlistSong.destroy();
     res.sendStatus(204);
   } catch (err) {
     next(err);
   }
 });
+
+

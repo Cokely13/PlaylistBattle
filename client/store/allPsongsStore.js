@@ -41,11 +41,11 @@ export const createPsong = (psong) => {
   };
 };
 
-export const deletePsong = (id, history) => {
+export const deletePsong = (id) => {
   return async (dispatch) => {
     const { data: psong } = await Axios.delete(`/api/psongs/${id}`);
     dispatch(_deletePsong(psong));
-    history.push("/psongs");
+    // history.push("/psongs");
   };
 };
 

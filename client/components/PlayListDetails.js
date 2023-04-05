@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -42,6 +41,11 @@ function PlayListDetails() {
     dispatch(createPsong(newSong));
     setSelectedSong(song); // Update selectedSong state
   };
+
+  const handleRemoveSong = (song) => {
+    dispatch(deletePsong(song.id));
+    setSelectedSong(song);
+  }
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -95,6 +99,9 @@ function PlayListDetails() {
           ? playlistSongs.map((playlistSong) => (
               <li key={playlistSong.id}>
                 {playlistSong.Song.name} - {playlistSong.Song.artist}
+                {addSongsVisible && (
+                  <button onClick={() => handleRemoveSong(playlistSong)}>Remove</button>
+                )}
               </li>
             ))
           : <div></div>}
