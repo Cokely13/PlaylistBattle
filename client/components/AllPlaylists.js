@@ -1,60 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPlaylists } from '../store/allPlaylistsStore';
-import { editPlaylist } from '../store/singlePlaylistStore';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { fetchPlaylists} from '../store/allPlaylistsStore';
+import PlaylistComparison from './PlaylistComparison';
 
-function AllPlayLists() {
+function AllPlaylists() {
   const dispatch = useDispatch();
-  const playlists = useSelector((state) => state.allPlaylists);
-  const userId = useSelector((state) => state.auth.id);
-  const [showSongs, setShowSongs] = useState([]);
+  const history = useHistory();
+  const [vote1, setVote1] = useState();
+  const [vote2, setVote2] = useState();
+  const [voting, setVoting] = useState();
+  const [unlockVoting, setUnlockVoting] = useState();
+  const [reload, setReload] = useState("1");
+  const [createdBy, setCreatedBy] = useState();
+  const playlists = useSelector((state) => state.allPlaylists )
 
   useEffect(() => {
-    dispatch(fetchPlaylists());
-  }, [dispatch]);
+    dispatch(fetchPlaylists())
+  }, [])
 
-  const handlePlaylistClick = (playlistId) => {
-    if (showSongs.includes(playlistId)) {
-      setShowSongs(showSongs.filter((id) => id !== playlistId));
-    } else {
-      setShowSongs([...showSongs, playlistId]);
-    }
-  };
+  const addToVote1 = (playlist) => {
+    setVote1(playlist)
+  }
 
-  const handleEditClick = (playlist) => {
-    dispatch(editPlaylist(playlist));
-  };
+  const addToVote2 = (playlist) => {
+    setVote2(playlist)
+    setUnlockVoting(1)
+  }
+
+  const handleVote = (event) => {
+    setVoting(1)
+  }
 
   return (
-    <div>
-      <h1>All Playlists:</h1>
-      <ul>
-        {playlists.sort((a, b) => a.name.localeCompare(b.name)).map((playlist) => (
-          <li key={playlist.id}>
-            <div
-              onClick={() => handlePlaylistClick(playlist.id)}
-              style={{ display: 'inline-block', cursor: 'pointer' }}
-            >
-              {playlist.name}
+    <div className="playlists-container" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}> {/* Add a container for the component */}
+      {voting !== 1 ?
+      <div className="playlists-wrapper" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem'}}> {/* Add a wrapper for the playlists */}
+        <div className="playlists-header">Playlists</div>
+        {playlists ? playlists.map((playlist) => {
+          return (
+            <div key={playlist.id} className="playlist-item">
+              <Link to={`/playlists/${playlist.id}`} className="playlist-name">{playlist.name}</Link>
+              <div className="playlist-stats">
+                <span>Wins: {playlist.wins}</span>
+                <span>Losses: {playlist.losses}</span>
+              </div>
+              {vote1 !== playlist ? <button onClick={() => addToVote1(playlist)} className="add-to-vote-button">Add to Vote1</button> : <div></div>}
+              {(vote1 && !vote2) || vote1 == playlist ? <button onClick={() => addToVote2(playlist)} className="add-to-vote-button">Add to Vote2</button>: <div></div>}
             </div>
-            {userId === playlist.userId && (
-              <button onClick={() => handleEditClick(playlist)}>Edit</button>
-            )}
-            {showSongs.includes(playlist.id) && (
-              <ul>
-                {playlist.playlistSongs.map((playlistSong) => (
-                  <li key={playlistSong.id}>
-                    {playlistSong.Song.name} - {playlistSong.Song.artist}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
+          )
+        }) : <div>NAN</div>}
+        {vote1 && vote2 ?
+        <div className="voting-details" style={{marginTop: '2rem'}}>
+          Playlist 1: {vote1.name} vs Playlist2: {vote2.name}
+        </div> : <div></div>}
+        {vote1 && vote2 ? <button onClick={handleVote} className="lets-vote-button" style={{marginTop: '2rem'}}>LET'S VOTE</button> :<div></div>}
+      </div> : <div></div>}
+      {voting == 1 ? <div style={{marginTop: '2rem'}}>
+        <PlaylistComparison playlist1={vote1} playlist2={vote2} />
+      </div>: <div></div>}
     </div>
-  );
+  )
 }
 
-export default AllPlayLists;
-
+export default AllPlaylists;
