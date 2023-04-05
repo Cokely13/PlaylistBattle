@@ -6,8 +6,10 @@ import Home from './components/Home';
 import SongList from './components/SongList';
 import PlaylistCreator from './components/PlaylistCreator';
 import AllPlayLists from './components/AllPlaylists';
+import UserPage from './components/User';
 import {me} from './store'
 import PlayListDetails from './components/PlayListDetails';
+import UserDetailPage from './components/UserDetailPage';
 
 /**
  * COMPONENT
@@ -25,6 +27,8 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/home" component={Home} />
+            <Route exact path="/users" component={UserPage} />
+            <Route exact path="/users/:userId" component={UserDetailPage} />
             <Route exact path="/playlists" component={AllPlayLists} />
             <Route exact path="/playlists/:playlistId" component={PlayListDetails} />
             <Route exact path="/songs" component={SongList} />

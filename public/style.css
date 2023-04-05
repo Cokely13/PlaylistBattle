@@ -57,3 +57,14 @@ form div {
   margin: 0;
   width: 100%;
 }
+
+.voting-details {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}

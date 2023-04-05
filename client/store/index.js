@@ -8,13 +8,17 @@ import singlePlaylistReducer from './singlePlaylistStore'
 import singleSongReducer from './singleSongStore'
 import psongsReducer from './allPsongsStore'
 import auth from './auth'
+import usersReducer from './allUsersStore'
+import singleUserReducer from './singleUserStore'
 
 const reducer = combineReducers({ auth,
   allPlaylists: playlistsReducer,
   allSongs: songsReducer,
   singlePlaylist: singlePlaylistReducer,
   singleSong: singleSongReducer,
-  allPsongs: psongsReducer })
+  allPsongs: psongsReducer,
+  allUsers: usersReducer,
+  singleUser: singleUserReducer })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
