@@ -25,9 +25,7 @@ function PlayListDetails() {
 
   const { id, name, user, wins, losses, playlistSongs } = singlePlaylist;
 
-  const handleEditPlaylist = () => {
-    console.log('Edit playlist');
-  };
+
 
   const toggleAddSongs = () => {
     setAddSongsVisible(!addSongsVisible);
@@ -84,7 +82,6 @@ function PlayListDetails() {
       <div>
         {currentUser.id === user?.id && (
           <div>
-            <button onClick={handleEditPlaylist}>Edit Playlist</button>
             <button onClick={toggleAddSongs}>
               {addSongsVisible ? 'Hide Add Songs' : 'Add Songs'}
             </button>
