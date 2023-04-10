@@ -10,6 +10,7 @@ import UserPage from './components/User';
 import {me} from './store'
 import PlayListDetails from './components/PlayListDetails';
 import UserDetailPage from './components/UserDetailPage';
+import TopPlaylists from './components/TopPlaylists';
 
 /**
  * COMPONENT
@@ -30,6 +31,7 @@ class Routes extends Component {
             <Route exact path="/users" component={UserPage} />
             <Route exact path="/users/:userId" component={UserDetailPage} />
             <Route exact path="/playlists" component={AllPlayLists} />
+            <Route exact path="/top" component={TopPlaylists} />
             <Route exact path="/playlists/:playlistId" component={PlayListDetails} />
             <Route exact path="/songs" component={SongList} />
             <Route exact path="/create" component={PlaylistCreator} />

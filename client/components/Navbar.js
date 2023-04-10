@@ -62,6 +62,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       {isLoggedIn ? (
         <div className="navbar-links">
           <Link to="/home" className="navbar-link">Home</Link>
+          <Link to="/users" className="navbar-link">Users</Link>
           <Link to="/songs" className="navbar-link">Songs</Link>
           <Link to="/create" className="navbar-link">Create</Link>
           <Link to="/playlists" className="navbar-link">Playlists</Link>
