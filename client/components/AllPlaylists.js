@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchPlaylists } from '../store/allPlaylistsStore';
 import PlaylistComparison from './PlaylistComparison';
 import Modal from 'react-modal';
+
 Modal.setAppElement('#app');
 
 function AllPlaylists() {
@@ -110,32 +111,34 @@ function AllPlaylists() {
         </table>
       )}
       {vote1 && vote2 && !voting ? (
-        <Modal
-          isOpen={true}
-          onRequestClose={() => setUnlockVoting(0)}
-          style={{
-            content: {
-              width: "50vw",
-              height: "50vh",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)"
-            }
+      <Modal
+      isOpen={true}
+      onRequestClose={() => setUnlockVoting(0)}
+      style={{
+        content: {
+          width: "50vw",
+          height: "50vh",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)"
+        }
+      }}
+    >
+      <div className="voting-details">
+        <h2>Vote for the best playlist!</h2>
+        <p>Playlist 1: {vote1.name}</p>
+        <p>Playlist 2: {vote2.name}</p>
+        <button
+          onClick={() => {
+            setVoting(true);
           }}
+          className="lets-vote-button"
         >
-          <div className="voting-details">
-            Playlist 1: {vote1.name} vs Playlist2: {vote2.name}
-            <button
-              onClick={() => {
-                setVoting(true);
-              }}
-              className="lets-vote-button"
-            >
-              LET'S VOTE
-            </button>
-          </div>
-        </Modal>
-      ): <div></div>}
+          Let's Vote
+        </button>
+      </div>
+    </Modal>
+      ) : null}
       {voting ? (
         <div className="playlist-comparison">
           <PlaylistComparison playlist1={vote1} playlist2={vote2} />
@@ -143,7 +146,6 @@ function AllPlaylists() {
       ) : null}
     </div>
   );
-
 
       }
 
