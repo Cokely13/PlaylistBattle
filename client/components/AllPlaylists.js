@@ -3,67 +3,148 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { fetchPlaylists} from '../store/allPlaylistsStore';
+import { fetchPlaylists } from '../store/allPlaylistsStore';
 import PlaylistComparison from './PlaylistComparison';
+import Modal from 'react-modal';
+Modal.setAppElement('#app');
 
 function AllPlaylists() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [vote1, setVote1] = useState();
   const [vote2, setVote2] = useState();
-  const [voting, setVoting] = useState();
+  const [voting, setVoting] = useState(false);
   const [unlockVoting, setUnlockVoting] = useState();
   const [reload, setReload] = useState("1");
   const [createdBy, setCreatedBy] = useState();
-  const playlists = useSelector((state) => state.allPlaylists )
+  const playlists = useSelector((state) => state.allPlaylists );
 
   useEffect(() => {
-    dispatch(fetchPlaylists())
-  }, [])
+    dispatch(fetchPlaylists());
+  }, []);
 
   const addToVote1 = (playlist) => {
-    setVote1(playlist)
-  }
+    setVote1(playlist);
+  };
 
   const addToVote2 = (playlist) => {
-    setVote2(playlist)
-    setUnlockVoting(1)
-  }
+    setVote2(playlist);
+    setUnlockVoting(1);
+  };
 
   const handleVote = (event) => {
-    setVoting(1)
-  }
+    setVoting(true);
+    setUnlockVoting(0);
+  };
+
+  const customStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      maxWidth: '800px',
+      maxHeight: '600px',
+      border: 'none',
+      borderRadius: '20px',
+      padding: '0px'
+    }
+  };
 
   return (
-    <div className="playlists-container" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}> {/* Add a container for the component */}
-      {voting !== 1 ?
-      <div className="playlists-wrapper" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem'}}> {/* Add a wrapper for the playlists */}
-        <div className="playlists-header">Playlists</div>
-        {playlists ? playlists.map((playlist) => {
-          return (
-            <div key={playlist.id} className="playlist-item">
-              <Link to={`/playlists/${playlist.id}`} className="playlist-name">{playlist.name}</Link>
-              <div className="playlist-stats">
-                <span>Wins: {playlist.wins}  </span>
-                <span>Losses: {playlist.losses}  </span>
-                <div># of Songs: {playlist.playlistSongs.length} </div>
-              </div>
-              {vote1 !== playlist ? <button onClick={() => addToVote1(playlist)} className="add-to-vote-button">Add to Vote1</button> : <div></div>}
-              {(vote1 && !vote2) || vote1 == playlist ? <button onClick={() => addToVote2(playlist)} className="add-to-vote-button">Add to Vote2</button>: <div></div>}
-            </div>
-          )
-        }) : <div>NAN</div>}
-        {vote1 && vote2 ?
-        <div className="voting-details" style={{marginTop: '2rem'}}>
-          Playlist 1: {vote1.name} vs Playlist2: {vote2.name}
-          <button onClick={handleVote} className="lets-vote-button" style={{marginLeft: '1rem'}}>LET'S VOTE</button>
-        </div> : <div></div>}
-      </div> : <div></div>}
-      {voting == 1 ? <div style={{marginTop: '2rem'}}>
-        <PlaylistComparison playlist1={vote1} playlist2={vote2} />
-      </div>: <div></div>}
+    <div className="playlists-container">
+      {!voting && (
+        <table className="playlists-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Wins</th>
+              <th>Losses</th>
+              <th># of Songs</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {playlists &&
+              playlists.map((playlist) => {
+                return (
+                  <tr key={playlist.id} className="playlist-row">
+                    <td>
+                      <Link
+                        to={`/playlists/${playlist.id}`}
+                        className="playlist-name"
+                      >
+                        {playlist.name}
+                      </Link>
+                    </td>
+                    <td>{playlist.wins}</td>
+                    <td>{playlist.losses}</td>
+                    <td>{playlist.playlistSongs.length}</td>
+                    <td className="playlist-buttons">
+                      {vote1 !== playlist ? (
+                        <button
+                          onClick={() => addToVote1(playlist)}
+                          className="add-to-vote-button"
+                        >
+                          Add to Vote1
+                        </button>
+                      ) : null}
+                      {vote1 && (!vote2 || vote1 === playlist) ? (
+                        <button
+                          onClick={() => addToVote2(playlist)}
+                          className="add-to-vote-button"
+                        >
+                          Add to Vote2
+                        </button>
+                      ) : null}
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      )}
+      {vote1 && vote2 && !voting ? (
+        <Modal
+          isOpen={true}
+          onRequestClose={() => setUnlockVoting(0)}
+          style={{
+            content: {
+              width: "50vw",
+              height: "50vh",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)"
+            }
+          }}
+        >
+          <div className="voting-details">
+            Playlist 1: {vote1.name} vs Playlist2: {vote2.name}
+            <button
+              onClick={() => {
+                setVoting(true);
+              }}
+              className="lets-vote-button"
+            >
+              LET'S VOTE
+            </button>
+          </div>
+        </Modal>
+      ): <div></div>}
+      {voting ? (
+        <div className="playlist-comparison">
+          <PlaylistComparison playlist1={vote1} playlist2={vote2} />
+        </div>
+      ) : null}
     </div>
-  )
-}
+  );
 
-export default AllPlaylists;
+
+      }
+
+export default AllPlaylists
