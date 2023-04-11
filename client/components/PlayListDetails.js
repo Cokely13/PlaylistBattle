@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPlaylist } from '../store/singlePlaylistStore';
 import { fetchSongs } from '../store/allSongsStore';
-import {createPsong, deletePsong} from '../store/allPsongsStore'
+import { createPsong, deletePsong } from '../store/allPsongsStore';
 
 function PlayListDetails() {
   const { playlistId } = useParams();
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
   const singlePlaylist = useSelector((state) => state.singlePlaylist);
   const allSongs = useSelector((state) => state.allSongs);
@@ -25,43 +25,52 @@ function PlayListDetails() {
 
   const { id, name, user, wins, losses, playlistSongs } = singlePlaylist;
 
-
-
   const toggleAddSongs = () => {
     setAddSongsVisible(!addSongsVisible);
   };
 
   const handleSelectSong = (song) => {
-    const newSong = {
-      playlistId: id,
-      songId: song.id
+    if (playlistSongs.length >= 10) {
+      alert('Maximum songs reached. Please remove a song to add a new one.');
+    } else {
+      const newSong = {
+        playlistId: id,
+        songId: song.id,
+      };
+      dispatch(createPsong(newSong));
+      setSelectedSong(song); // Update selectedSong state
     }
-    dispatch(createPsong(newSong));
-    setSelectedSong(song); // Update selectedSong state
   };
 
   const handleRemoveSong = (song) => {
     dispatch(deletePsong(song.id));
     setSelectedSong(song);
-  }
+  };
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
 
-
   const renderAddSongs = () => {
-    const songsToAdd = allSongs.filter(song => !playlistSongs.some(ps => ps.Song.id === song.id));
-    const filteredSongs = songsToAdd.filter((song) =>
-      song.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      song.artist.toLowerCase().includes(searchText.toLowerCase())
+    const songsToAdd = allSongs.filter(
+      (song) => !playlistSongs.some((ps) => ps.Song.id === song.id)
+    );
+    const filteredSongs = songsToAdd.filter(
+      (song) =>
+        song.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        song.artist.toLowerCase().includes(searchText.toLowerCase())
     );
     return (
       <div>
         <h3>Add Songs:</h3>
-        <input type="text" placeholder="Search songs..." value={searchText} onChange={handleSearchChange} />
+        <input
+          type="text"
+          placeholder="Search songs..."
+          value={searchText}
+          onChange={handleSearchChange}
+        />
         {filteredSongs.length === 0 && <div>No Results</div>}
-        {filteredSongs.length > 0 &&
+        {filteredSongs.length > 0 && (
           <ul>
             {filteredSongs.map((song) => (
               <li key={song.id}>
@@ -70,7 +79,7 @@ function PlayListDetails() {
               </li>
             ))}
           </ul>
-        }
+        )}
       </div>
     );
   };
@@ -103,9 +112,16 @@ function PlayListDetails() {
             ))
           : <div></div>}
       </ol>
-      {addSongsVisible && renderAddSongs()}
+      {addSongsVisible && (
+        <div>
+          {playlistSongs.length >= 10 && <div>Maximum Songs</div>}
+          {playlistSongs.length < 10 && <div>Add Additional Songs</div>}
+          {renderAddSongs()}
+        </div>
+      )}
     </div>
   );
+
 }
 
 export default PlayListDetails;
