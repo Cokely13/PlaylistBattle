@@ -1,13 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { Link } from 'react-router-dom';
 
-function UserDetailPage() {
+function Profile() {
   const dispatch = useDispatch();
-  const { userId } = useParams();
+  const userId =  useSelector(state => state.auth);
   const [sortBy, setSortBy] = useState("");
   const user = useSelector(state => state.singleUser);
   const [searchQuery, setSearchQuery] = useState('');
@@ -15,7 +14,7 @@ function UserDetailPage() {
 
 
   useEffect(() => {
-    dispatch(fetchSingleUser(userId));
+    dispatch(fetchSingleUser(userId.id));
   }, [dispatch, userId]);
 
   const handleSearch = (e) => {
@@ -27,7 +26,6 @@ function UserDetailPage() {
     setSortOrder(order !== '' ? order : null);
   };
 
-  console.log('user', user)
 
   const getTotalWins = () => {
     if (user && user.playlists) {
@@ -119,4 +117,4 @@ function UserDetailPage() {
 
 
 }
-export default UserDetailPage;
+export default Profile;
