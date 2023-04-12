@@ -14,7 +14,21 @@ const User = db.define('user', {
   },
   password: {
     type: Sequelize.STRING,
-  }
+  },
+  email: {
+    type: Sequelize.STRING,
+    isEmail: true,
+    unique: true,
+    allowNull: false
+  },
+  imageUrl: {
+    type: Sequelize.TEXT,
+    defaultValue: 'https://cquipsplus.ca/wp-content/themes/cera/assets/images/avatars/user-avatar.png',
+  },
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
 })
 
 module.exports = User
@@ -44,10 +58,10 @@ User.authenticate = async function({ username, password }){
     return user.generateToken();
 };
 
-User.findByToken = async function(token) {
+User.findByToken = async function (token) {
   try {
-    const {id} = await jwt.verify(token, process.env.JWT)
-    const user = User.findByPk(id)
+    const { id } = await jwt.verify(token, process.env.JWT)
+    const user = await User.findByPk(id)
     if (!user) {
       throw 'nooo'
     }

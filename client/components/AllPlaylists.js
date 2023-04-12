@@ -95,6 +95,7 @@ function AllPlaylists() {
                           Add to Vote1
                         </button>
                       ) : null}
+
                       {vote1 && (!vote2 || vote1 === playlist) ? (
                         <button
                           onClick={() => addToVote2(playlist)}
