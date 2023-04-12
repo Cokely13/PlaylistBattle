@@ -9,6 +9,7 @@ function Profile() {
   const userId =  useSelector(state => state.auth);
   const [sortBy, setSortBy] = useState("");
   const user = useSelector(state => state.singleUser);
+  const [showplaylists, setShowPlaylists] = useState();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState(null);
 
@@ -26,6 +27,13 @@ function Profile() {
     setSortOrder(order !== '' ? order : null);
   };
 
+  const handleShowPlaylist = (e) => {
+    setShowPlaylists(1)
+  };
+
+  const handleHidePlaylist = (e) => {
+    setShowPlaylists()
+  };
 
   const getTotalWins = () => {
     if (user && user.playlists) {
@@ -62,16 +70,24 @@ function Profile() {
     return playlist.name.toLowerCase().includes(searchQuery);
   });
 
+  console.log('email', user)
+
   return (
     <div className="playlists-container">
       <div className="playlists-header">
       {user ?
         <div className="user-details">
+          <img  src={user.imageUrl}/>
           <h1 className="user-name"><u>{user.username}</u></h1>
-          <div className="user-stats">
+          <h1 className="user-email">{user.email}</h1>
+          {user.admin? <h1>ADMIN</h1> : <div></div>}
+          </div >: <div></div>}
+          {showplaylists !== 1 ? <button onClick={handleShowPlaylist}>Show Playlists</button> : <button onClick={handleHidePlaylist}>Hide Playlists</button> }
+         {showplaylists == 1 ? <div>
+                <div className="user-stats">
             <p><strong>Total Wins:</strong> {getTotalWins()}</p>
             <p><strong>Total Losses:</strong> {getTotalLosses()}</p>
-          </div></div >: <div></div>}
+          </div>
         <div>
           <input
             type="text"
@@ -86,7 +102,6 @@ function Profile() {
             <option value="losses">Losses</option>
           </select>
         </div>
-      </div>
       <table className="playlists-table">
         <thead>
           <tr>
@@ -112,6 +127,8 @@ function Profile() {
           ))}
         </tbody>
       </table>
+      </div> : <div></div>}
+    </div>
     </div>
   );
 
