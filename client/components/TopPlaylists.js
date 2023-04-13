@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -48,15 +47,6 @@ function TopPlaylists() {
     return sortedPlaylists;
   };
 
-
-
-
-
-
-
-
-  console.log("pla", playlists)
-
   // Handle sort option change
   const handleSortOptionChange = (event) => {
     setSortOption(event.target.value);
@@ -76,17 +66,17 @@ function TopPlaylists() {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
-
   const sortedPlaylists = sortPlaylists(playlists, sortOption, sortOrder);
   const filteredPlaylists = searchQuery
-  ? sortPlaylists(sortedPlaylists.filter((playlist) => playlist.name.toLowerCase().includes(searchQuery.toLowerCase())), sortOption, sortOrder)
-  : sortedPlaylists;
+    ? sortPlaylists(sortedPlaylists.filter((playlist) => playlist.name.toLowerCase().includes(searchQuery.toLowerCase())), sortOption, sortOrder)
+    : sortedPlaylists;
 
-  return (
-    <div className="playlists-container" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <div className="playlists-wrapper">
-        <div className="playlists-header">Playlists</div>
+    return (
+      <div className="playlists-container">
+        <div className="playlists-header"><u>Records</u></div>
+        <div className="search-sort-container">
         <div className="search-container">
+        <label>Search:</label>
           <input
             type="text"
             value={searchQuery}
@@ -95,46 +85,49 @@ function TopPlaylists() {
           />
         </div>
         <div className="sort-container">
-  <label htmlFor="sort-select">Sort by:</label>
-  <select id="sort-select" value={sortOption} onChange={handleSortOptionChange}>
-  <option value="name">Name</option>
-  <option value="createdBy">Created By</option>
-  <option value="wins">Wins</option>
-  <option value="losses">Losses</option>
-  <option value="winPercentage">Win Percentage</option>
-</select>
-<button onClick={handleSortDirectionChange}>{sortOrder === 'asc' ? '▲' : '▼'}</button>
-</div>
-        <table className="playlists-table">
-          <thead>
-            <tr>
-              <th className="table-header-name">Name</th>
-              <th className="table-header-created-by">Created By</th>
-              <th className="table-header-wins">Wins</th>
-              <th className="table-header-losses">Losses</th>
-              <th className="table-header-songs"># of Songs</th>
-              <th className="table-header-winPercentage">Win Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredPlaylists.map((playlist) => {
-              const winPercentage = calculateWinPercentage(playlist.wins, playlist.losses);
-              return (
-                <tr key={playlist.id} className="playlist-row">
-                  <td className="table-cell-name"><Link to={`/playlists/${playlist.id}`} className="playlist-name">{playlist.name}</Link></td>
-                  <td className="table-cell-created-by">{playlist.user.username}</td>
-                  <td className="table-cell-wins">{playlist.wins}</td>
-                  <td className="table-cell-losses">{playlist.losses}</td>
-                  <td className="table-cell-songs">{playlist.playlistSongs.length}</td>
-                  <td className="table-cell-winPercentage">{winPercentage}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+          <label htmlFor="sort-select">Sort by:</label>
+          <select id="sort-select" value={sortOption} onChange={handleSortOptionChange}>
+            <option value="name">Name</option>
+            <option value="createdBy">Created By</option>
+            <option value="wins">Wins</option>
+            <option value="losses">Losses</option>
+            <option value="winPercentage">Win Percentage</option>
+          </select>
+          <button onClick={handleSortDirectionChange}>{sortOrder === 'asc' ? '▲' : '▼'}</button>
+        </div>
       </div>
-    </div>
-  );
+        <div className="playlists-wrapper">
+          <table className="playlists-table">
+            <thead>
+              <tr>
+                <th className="table-header-name">Name</th>
+                <th className="table-header-created-by">Created By</th>
+                <th className="table-header-wins">Wins</th>
+                <th className="table-header-losses">Losses</th>
+                <th className="table-header-songs"># of Songs</th>
+                <th className="table-header-winPercentage">Win Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredPlaylists.map((playlist) => {
+                const winPercentage = calculateWinPercentage(playlist.wins, playlist.losses);
+                return (
+                  <tr key={playlist.id} className="playlist-row">
+                    <td className="table-cell-name"><Link to={`/playlists/${playlist.id}`} className="playlist-name">{playlist.name}</Link></td>
+                    <td className="table-cell-created-by">{playlist.user.username}</td>
+                    <td className="table-cell-wins">{playlist.wins}</td>
+                    <td className="table-cell-losses">{playlist.losses}</td>
+                    <td className="table-cell-songs">{playlist.playlistSongs.length}</td>
+                    <td className="table-cell-winPercentage">{winPercentage}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+            }
 
 
 
@@ -142,8 +135,6 @@ function TopPlaylists() {
 
 
 
-
-      }
 
 
 

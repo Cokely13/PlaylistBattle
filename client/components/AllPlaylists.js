@@ -85,7 +85,11 @@ function AllPlaylists() {
 
     return (
       <div className="playlists-container">
-        {!voting ? <div> <div className="search-container">
+        <h1><u>Playlists</u></h1>
+       {!voting && (
+      <div className="search-sort-container">
+        <div className="search-container">
+        <label>Search:</label>
           <input
             type="text"
             value={searchQuery}
@@ -103,7 +107,9 @@ function AllPlaylists() {
             <option value="winPercentage">Win Percentage</option>
           </select>
           <button onClick={handleSortOrderChange}>{sortOrder === 'asc' ? '▲' : '▼'}</button>
-        </div></div> : <div></div>}
+        </div>
+      </div>
+    )}
         {!voting && (
           <table className="playlists-table">
             <thead>

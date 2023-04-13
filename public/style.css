@@ -70,8 +70,35 @@ form div {
 }
 
 .playlists-table {
-  border-collapse: separate;
-  border-spacing: 10px;
+  border-collapse: collapse;
+  margin: 0 auto; /* Center the table */
+  width: 80%;
+  border: 3px solid black; /* Thicker border */
+}
+
+.playlists-table th,
+.playlists-table td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center; /* Center the text in each column */
+}
+
+.playlists-table th {
+  background-color: #eee;
+}
+
+.playlists-table th:not(:first-child),
+.playlists-table td:not(:first-child) {
+  border-left: none; /* Remove left border */
+}
+
+.playlists-table th:not(:last-child),
+.playlists-table td:not(:last-child) {
+  border-right: none; /* Remove right border */
+}
+
+.playlists-table td:nth-child(even) {
+  background-color: #f2f2f2; /* Add alternating background color */
 }
 
 .table-header-name,
@@ -187,4 +214,69 @@ form div {
 
 .playlist-name:hover {
   text-decoration: underline;
+}
+
+.playlists-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playlists-wrapper {
+  width: 80%;
+  max-width: 1200px;
+}
+
+.playlists-header {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.search-container label {
+  margin-right: 1rem;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sort-container label {
+  margin-right: 1rem;
+}
+
+.sort-container select {
+  margin-right: 1rem;
+}
+
+.sort-container button {
+  font-size: 1rem;
+}
+
+.playlists-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.playlists-table th,
+.playlists-table td {
+  border: 1px solid black;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.table-header-name,
+.table-header-created-by {
+  text-align: left;
+}
+
+.table-header-winPercentage {
+  text-align: right;
 }
