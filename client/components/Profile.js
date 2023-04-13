@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { Link } from 'react-router-dom';
+import EditProfile from './EditProfile';
 
 function Profile() {
   const dispatch = useDispatch();
-  const userId =  useSelector(state => state.auth);
+  const history = useHistory();
+  const userId = useSelector(state => state.auth);
   const [sortBy, setSortBy] = useState("");
   const user = useSelector(state => state.singleUser);
-  const [showplaylists, setShowPlaylists] = useState();
+  const [showPlaylists, setShowPlaylists] = useState();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState(null);
-
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     dispatch(fetchSingleUser(userId.id));
@@ -27,12 +29,12 @@ function Profile() {
     setSortOrder(order !== '' ? order : null);
   };
 
-  const handleShowPlaylist = (e) => {
-    setShowPlaylists(1)
+  const handleShowPlaylists = () => {
+    setShowPlaylists(1);
   };
 
-  const handleHidePlaylist = (e) => {
-    setShowPlaylists()
+  const handleHidePlaylists = () => {
+    setShowPlaylists();
   };
 
   const getTotalWins = () => {
@@ -47,6 +49,10 @@ function Profile() {
       return user.playlists.reduce((acc, playlist) => acc + playlist.losses, 0);
     }
     return 0;
+  };
+
+  const handleEditProfile = () => {
+    history.push('/edit-profile');
   };
 
   const sortedPlaylists = user && user.playlists ?
@@ -70,67 +76,91 @@ function Profile() {
     return playlist.name.toLowerCase().includes(searchQuery);
   });
 
-  console.log('email', user)
-
   return (
     <div className="playlists-container">
-      <div className="playlists-header">
-      {user ?
-        <div className="user-details">
-          <img  src={user.imageUrl}/>
-          <h1 className="user-name"><u>{user.username}</u></h1>
-          <h1 className="user-email">{user.email}</h1>
-          {user.admin? <h1>ADMIN</h1> : <div></div>}
-          </div >: <div></div>}
-          {showplaylists !== 1 ? <button onClick={handleShowPlaylist}>Show Playlists</button> : <button onClick={handleHidePlaylist}>Hide Playlists</button> }
-         {showplaylists == 1 ? <div>
-                <div className="user-stats">
-            <p><strong>Total Wins:</strong> {getTotalWins()}</p>
-            <p><strong>Total Losses:</strong> {getTotalLosses()}</p>
-          </div>
-        <div>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearch}
-            placeholder="Search playlists by name"
-          />
-          <select value={sortOrder} onChange={handleSort}>
-            <option value="">Sort by...</option>
-            <option value="name">Name</option>
-            <option value="wins">Wins</option>
-            <option value="losses">Losses</option>
-          </select>
+      {showEdit ? (
+        <EditProfile setShowEdit={setShowEdit} user={user} fetchUser={fetchSingleUser} />
+      ) : (
+        <div className="playlists-header">
+          {user ? (
+            <div className="user-details">
+              <img src={user.imageUrl} className="profile-img" style={{width: "100px", height: "100px"}} />
+              <div className="user-name">
+                <h1>
+                  <u>{user.username}</u>
+                </h1>
+                <button onClick={() => setShowEdit(true)}>Edit Profile</button>
+              </div>
+              <h1 className="user-email">{user.email}</h1>
+              {user.admin ? <h1>ADMIN</h1> : <div></div>}
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {showPlaylists !== 1 ? (
+            <button onClick={handleShowPlaylists}>Show Playlists</button>
+          ) : (
+            <button onClick={handleHidePlaylists}>Hide Playlists</button>
+          )}
+          {showPlaylists == 1 ? (
+            <div>
+              <div className="user-stats">
+                <p>
+                  <strong>Total Wins:</strong> {getTotalWins()}
+                </p>
+                <p>
+                  <strong>Total Losses:</strong> {getTotalLosses()}
+                </p>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  placeholder="Search playlists by name"
+                />
+                <select value={sortOrder} onChange={handleSort}>
+                  <option value="">Sort by...</option>
+                  <option value="name">Name</option>
+                  <option value="wins">Wins</option>
+                  <option value="losses">Losses</option>
+                </select>
+              </div>
+              <table className="playlists-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredPlaylists.map((playlist) => (
+                    <tr key={playlist.id} className="playlist-row">
+                      <td>
+                        <Link
+                          to={`/playlists/${playlist.id}`}
+                          className="playlist-name"
+                        >
+                          {playlist.name}
+                        </Link>
+                      </td>
+                      <td>{playlist.wins}</td>
+                      <td>{playlist.losses}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
-      <table className="playlists-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Wins</th>
-            <th>Losses</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredPlaylists.map((playlist) => (
-            <tr key={playlist.id} className="playlist-row">
-              <td>
-                <Link
-                  to={`/playlists/${playlist.id}`}
-                  className="playlist-name"
-                >
-                  {playlist.name}
-                </Link>
-              </td>
-              <td>{playlist.wins}</td>
-              <td>{playlist.losses}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </div> : <div></div>}
-    </div>
+      )}
     </div>
   );
+
+
 
 
 }
