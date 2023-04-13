@@ -33,6 +33,8 @@ function TopPlaylists() {
     sortedPlaylists.sort((a, b) => {
       if (option === "name") {
         return order === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+      } else if (option === "createdBy") {
+        return order === "asc" ? a.user.username.localeCompare(b.user.username) : b.user.username.localeCompare(a.user.username);
       } else if (option === "wins") {
         return order === "asc" ? a.wins - b.wins : b.wins - a.wins;
       } else if (option === "losses") {
@@ -45,6 +47,15 @@ function TopPlaylists() {
     });
     return sortedPlaylists;
   };
+
+
+
+
+
+
+
+
+  console.log("pla", playlists)
 
   // Handle sort option change
   const handleSortOptionChange = (event) => {
@@ -59,6 +70,10 @@ function TopPlaylists() {
   // Handle search query change
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  const handleSortDirectionChange = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
 
@@ -82,17 +97,19 @@ function TopPlaylists() {
         <div className="sort-container">
   <label htmlFor="sort-select">Sort by:</label>
   <select id="sort-select" value={sortOption} onChange={handleSortOptionChange}>
-    <option value="name">Name</option>
-    <option value="wins">Wins</option>
-    <option value="losses">Losses</option>
-    <option value="winPercentage">Win Percentage</option>
-  </select>
-  <button onClick={handleSortOrderChange}>{sortOrder === 'asc' ? '▲' : '▼'}</button>
+  <option value="name">Name</option>
+  <option value="createdBy">Created By</option>
+  <option value="wins">Wins</option>
+  <option value="losses">Losses</option>
+  <option value="winPercentage">Win Percentage</option>
+</select>
+<button onClick={handleSortDirectionChange}>{sortOrder === 'asc' ? '▲' : '▼'}</button>
 </div>
         <table className="playlists-table">
           <thead>
             <tr>
               <th className="table-header-name">Name</th>
+              <th className="table-header-created-by">Created By</th>
               <th className="table-header-wins">Wins</th>
               <th className="table-header-losses">Losses</th>
               <th className="table-header-songs"># of Songs</th>
@@ -105,6 +122,7 @@ function TopPlaylists() {
               return (
                 <tr key={playlist.id} className="playlist-row">
                   <td className="table-cell-name"><Link to={`/playlists/${playlist.id}`} className="playlist-name">{playlist.name}</Link></td>
+                  <td className="table-cell-created-by">{playlist.user.username}</td>
                   <td className="table-cell-wins">{playlist.wins}</td>
                   <td className="table-cell-losses">{playlist.losses}</td>
                   <td className="table-cell-songs">{playlist.playlistSongs.length}</td>

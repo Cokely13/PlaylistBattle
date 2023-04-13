@@ -47,7 +47,7 @@ function PlaylistComparison({ playlist1, playlist2 }) {
       {showWinner ? (
         <div>
           <h2 className="playlist-comparison-winner">The winner is: {getWinner()}</h2>
-          <Link to={'/home'}>Home</Link>
+          <Link to={'/top'}>Playlists</Link>
         </div>
       ) : (
         <div className="playlist-comparison-wrapper">

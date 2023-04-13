@@ -27,7 +27,6 @@ function UserDetailPage() {
     setSortOrder(order !== '' ? order : null);
   };
 
-  console.log('user', user)
 
   const getTotalWins = () => {
     if (user && user.playlists) {

@@ -8,8 +8,7 @@ function EditProfile({ user, fetchUser, setShowEdit }) {
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [imageUrl, setImageUrl] = useState(user.imageUrl);
-  const [imageFile, setImageFile] = useState(user.imageUrl);
+
 
 
   const handleUsernameChange = (e) => {
@@ -28,11 +27,6 @@ function EditProfile({ user, fetchUser, setShowEdit }) {
     setConfirmPassword(e.target.value);
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImageUrl(URL.createObjectURL(file));
-    setImageFile(file);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

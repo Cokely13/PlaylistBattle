@@ -33,7 +33,7 @@ router.put('/:id', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'username', 'email', 'admin', 'imageUrl', 'password'],
+      attributes: ['id', 'username', 'email', 'admin', 'password'],
       include: [Playlist],
     });
     res.json(user);

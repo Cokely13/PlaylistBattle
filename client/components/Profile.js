@@ -84,7 +84,6 @@ function Profile() {
         <div className="playlists-header">
           {user ? (
             <div className="user-details">
-              <img src={user.imageUrl} className="profile-img" style={{width: "100px", height: "100px"}} />
               <div className="user-name">
                 <h1>
                   <u>{user.username}</u>
