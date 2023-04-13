@@ -2,83 +2,74 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateSingleUser } from '../store/singleUserStore';
 
-function EditProfile({ setShowEdit, user }) {
+function EditProfile({ user, fetchUser, setShowEdit }) {
   const dispatch = useDispatch();
   const [username, setUsername] = useState(user.username);
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [imageUrl, setImageUrl] = useState(user.imageUrl);
+  const [imageFile, setImageFile] = useState(user.imageUrl);
+
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleImageUrlChange = (e) => {
-    setImageUrl(e.target.value);
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageUrl(URL.createObjectURL(file));
+    setImageFile(file);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedUser = { id: user.id, username, password, email, imageUrl };
-    dispatch(updateSingleUser(updatedUser));
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password do not match!");
+      return;
+    }
+    const newUser = {
+      id: user.id,
+      password: password,
+      username: username,
+      email: email
+    }
+
+    await dispatch(updateSingleUser(newUser));
+    await fetchUser(user.id);
     setShowEdit(false);
   };
 
   return (
-    <div className="edit-profile">
+    <form className="edit-profile-form" onSubmit={handleSubmit}>
       <h2>Edit Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="imageUrl">Profile Image URL:</label>
-          <input
-            type="text"
-            id="imageUrl"
-            value={imageUrl}
-            onChange={handleImageUrlChange}
-          />
-        </div>
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => setShowEdit(false)}>
-          Cancel
-        </button>
-      </form>
-    </div>
+      <label htmlFor="username">Username:</label>
+      <input type="text" id="username" value={username} onChange={handleUsernameChange} />
+
+      <label htmlFor="email">Email:</label>
+      <input type="email" id="email" value={email} onChange={handleEmailChange} />
+
+      <label htmlFor="password">Password:</label>
+      <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+
+      <label htmlFor="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+      <button type="submit">Save Changes</button>
+    </form>
   );
 }
 
 export default EditProfile;
+
