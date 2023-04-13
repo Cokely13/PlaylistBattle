@@ -110,91 +110,91 @@ function AllPlaylists() {
         </div>
       </div>
     )}
-        {!voting && (
-          <table className="playlists-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Created By</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th># of Songs</th>
-                <th>Votes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredPlaylists &&
-                filteredPlaylists.map((playlist) => {
-                  const winPercentage = calculateWinPercentage(playlist.wins, playlist.losses);
-                  return (
-                    <tr key={playlist.id} className="playlist-row">
-                      <td>
-                        <Link
-                          to={`/playlists/${playlist.id}`}
-                          className="playlist-name"
-                        >
-                          {playlist.name}
-                        </Link>
-                      </td>
-                      <td>{playlist.user.username}</td>
-                      <td>{playlist.wins}</td>
-                      <td>{playlist.losses}</td>
-                      <td>{playlist.playlistSongs.length}</td>
-                      <td className="playlist-buttons">
-                        {vote1 !== playlist ? (
-                          <button
-                            onClick={() => addToVote1(playlist)}
-                            className="add-to-vote-button"
-                          >
-                            Add to Vote1
-                          </button>
-                        ) : null}
+    {!voting && (
+      <table className="playlists-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Created By</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th># of Songs</th>
+            <th>Votes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredPlaylists &&
+            filteredPlaylists.map((playlist) => {
+              const winPercentage = calculateWinPercentage(playlist.wins, playlist.losses);
+              return (
+                <tr key={playlist.id} className="playlist-row">
+                  <td>
+                    <Link
+                      to={`/playlists/${playlist.id}`}
+                      className="playlist-name"
+                    >
+                      {playlist.name}
+                    </Link>
+                  </td>
+                  <td>{playlist.user.username}</td>
+                  <td>{playlist.wins}</td>
+                  <td>{playlist.losses}</td>
+                  <td>{playlist.playlistSongs.length}</td>
+                  <td className="playlist-buttons">
+                    {vote1 !== playlist ? (
+                      <button
+                        onClick={() => addToVote1(playlist)}
+                        className="add-to-vote-button1"
+                      >
+                        Add to Vote1
+                      </button>
+                    ) : null}
 
-                        {vote1 && (!vote2 || vote1 === playlist) ? (
-                          <button
-                            onClick={() => addToVote2(playlist)}
-                            className="add-to-vote-button"
-                          >
-                            Add to Vote2
-                          </button>
-                        ) : null}
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
-        )}
-        {vote1 && vote2 && !voting ? (
-          <Modal
-            isOpen={true}
-            onRequestClose={() => setUnlockVoting(0)}
-            style={{
-              content: {
-                width: "50vw",
-                height: "50vh",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
-              }
-            }}
-          >
-            <div className="voting-details">
-              <h2>Vote for the best playlist!</h2>
-              <p>Playlist 1: {vote1.name}</p>
-              <p>Playlist 2: {vote2.name}</p>
-              <button
-                onClick={() => {
-                  setVoting(true);
-                }}
-                className="lets-vote-button"
-              >
-                Let's Vote
-              </button>
-            </div>
-          </Modal>
-        ) : null}
-       {voting ? (
+                    {vote1 && (!vote2 || vote1 === playlist) ? (
+                      <button
+                        onClick={() => addToVote2(playlist)}
+                        className="add-to-vote-button2"
+                      >
+                        Add to Vote2
+                      </button>
+                    ) : null}
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    )}
+       {vote1 && vote2 && !voting ? (
+      <Modal
+        isOpen={true}
+        onRequestClose={() => setUnlockVoting(0)}
+        style={{
+          content: {
+            width: "50vw",
+            height: "50vh",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)"
+          }
+        }}
+      >
+   <div className="voting-details">
+      <h2>Vote for the best playlist!</h2>
+      <p>Playlist 1: {vote1.name}</p>
+      <p>Playlist 2: {vote2.name}</p>
+      <button
+        onClick={() => {
+          setVoting(true);
+        }}
+        className="lets-vote-button"
+      >
+        Let's Vote
+      </button>
+    </div>
+  </Modal>
+) : null}
+{voting ? (
   <div className="playlist-comparison">
     <PlaylistComparison playlist1={vote1} playlist2={vote2} />
   </div>

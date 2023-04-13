@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { Link } from 'react-router-dom';
+import { FaSearch, FaSort } from 'react-icons/fa';
 
 function UserDetailPage() {
   const dispatch = useDispatch();
@@ -63,28 +64,53 @@ function UserDetailPage() {
   });
 
   return (
-    <div className="playlists-container">
-      <div className="playlists-header">
-      {user ?
-        <div className="user-details">
-          <h1 className="user-name"><u>{user.username}</u></h1>
-          <div className="user-stats">
-            <p><strong>Total Wins:</strong> {getTotalWins()}</p>
-            <p><strong>Total Losses:</strong> {getTotalLosses()}</p>
-          </div></div >: <div></div>}
-        <div>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearch}
-            placeholder="Search playlists by name"
-          />
-          <select value={sortOrder} onChange={handleSort}>
-            <option value="">Sort by...</option>
-            <option value="name">Name</option>
-            <option value="wins">Wins</option>
-            <option value="losses">Losses</option>
-          </select>
+    <div className="user-detail-page">
+      <div className="user-header">
+        <div className="user-info">
+          {user ? (
+            <>
+              <h1 className="user-name">{user.username}</h1>
+              <div className="user-stats">
+                <p className="user-stat">
+                  <strong>Total Wins:</strong> {getTotalWins()}
+                </p>
+                <p className="user-stat">
+                  <strong>Total Losses:</strong> {getTotalLosses()}
+                </p>
+              </div>
+            </>
+          ) : (
+            <div className="loading-message">Loading...</div>
+          )}
+        </div>
+        <div className="user-controls">
+          <div className="search-container">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearch}
+              placeholder="Search playlists by name"
+              className="search-input"
+            />
+            <div className="search-icon">
+              <FaSearch />
+            </div>
+          </div>
+          <div className="sort-container">
+            <select
+              value={sortOrder}
+              onChange={handleSort}
+              className="sort-select"
+            >
+              <option value="">Sort by...</option>
+              <option value="name">Name</option>
+              <option value="wins">Wins</option>
+              <option value="losses">Losses</option>
+            </select>
+            <div className="sort-icon">
+              <FaSort />
+            </div>
+          </div>
         </div>
       </div>
       <table className="playlists-table">
