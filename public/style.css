@@ -594,3 +594,245 @@ button:hover {
 .playlist-comparison {
   margin-top: 40px;
 }
+
+.song-list-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.add-song-form-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.add-song-form input[type="text"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-song-form-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-song-form-button:hover {
+  background-color: #0069d9;
+}
+
+input[type="text"] {
+  display: inline-block;
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  display: inline-block;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+button:hover {
+  background-color: #0069d9;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.song-item {
+  padding: 20px;
+  border-bottom: 5px solid #0d6efd;
+  border-top: 5px solid #0d6efd;
+  border-left: 5px solid #0d6efd;
+  border-right: 5px solid #0d6efd;
+  margin: 20px;
+}
+
+/* .playlist-comparison-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.playlist-comparison-wrapper {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.playlist-comparison-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  width: 60%;
+  margin: 20px;
+}
+
+.playlist-comparison-name {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.playlist-comparison-votes {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.playlist-comparison-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.playlist-comparison-winner {
+  font-size: 2rem;
+  margin-bottom: 20px;
+} */
+
+.playlist-comparison-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.playlist-comparison-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  /* max-width: 800px; */
+}
+
+/* .playlist-comparison-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  padding: 20px;
+  margin: 10px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  text-align: center;
+} */
+
+.song-name {
+  display: inline-block;
+  width: 200px;
+}
+
+
+
+/* .playlist-comparison-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 250px;
+  padding: 30px;
+  margin: 10px;
+  border: 4px solid #007bff;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  text-align: center;
+} */
+
+.playlist-comparison-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  /* min-height: 500px; */
+  height: 300px;
+  padding: 10px;
+  margin: 50px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.playlist-comparison-button {
+  margin-top: 10px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2ecc71;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.playlist-comparison-button:hover {
+  background-color: #27ae60;
+}
+
+.playlist-comparison-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.playlist-comparison-votes {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.playlist-comparison-winner {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 50px 0;
+  text-align: center;
+  color: #2ecc71;
+}

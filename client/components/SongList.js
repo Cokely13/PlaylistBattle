@@ -96,7 +96,7 @@ function SongList() {
           <ul>
             {sortedSongs.map(song => (
               <li key={song.id} className="song-item">
-                {song.name} - {song.artist}
+                <u><b>{song.name}</b></u> by {song.artist}
               </li>
             ))}
           </ul>

@@ -180,9 +180,9 @@ function AllPlaylists() {
         }}
       >
    <div className="voting-details">
-      <h2>Vote for the best playlist!</h2>
-      <p>Playlist 1: {vote1.name}</p>
-      <p>Playlist 2: {vote2.name}</p>
+      <h1><b> {vote1.name}</b></h1>
+      <p><b>VS</b></p>
+      <h1><b>  {vote2.name}</b></h1>
       <button
         onClick={() => {
           setVoting(true);
