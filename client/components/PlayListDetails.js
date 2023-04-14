@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -61,8 +63,8 @@ function PlayListDetails() {
         song.artist.toLowerCase().includes(searchText.toLowerCase())
     );
     return (
-      <div>
-        <h3>Add Songs:</h3>
+      <div className="playlist-add-songs-container">
+        <h3 className="playlist-add-songs-title">Add Songs:</h3>
         <input
           type="text"
           placeholder="Search songs..."
@@ -71,11 +73,16 @@ function PlayListDetails() {
         />
         {filteredSongs.length === 0 && <div>No Results</div>}
         {filteredSongs.length > 0 && (
-          <ul>
+          <ul className="playlist-add-songs-list">
             {filteredSongs.map((song) => (
               <li key={song.id}>
-                {song.name} - {song.artist}{' '}
-                <button onClick={() => handleSelectSong(song)}>Add</button>
+                <div className="playlist-song-info">
+                  <span className="playlist-song-name">{song.name}</span>
+                  <span className="playlist-song-artist">{song.artist}</span>
+                </div>
+                <button className="playlist-song-add" onClick={() => handleSelectSong(song)}>
+                  Add
+                </button>
               </li>
             ))}
           </ul>
@@ -85,42 +92,49 @@ function PlayListDetails() {
   };
 
   return (
-    <div>
-      <h2>{name}</h2>
-      <div>Created by: {user ? user.username : 'No User'}</div>
-      <div>
+    <div className="playlist-details-container">
+      <h2 className="playlist-details-title">{name}</h2>
+      <div className="playlist-details-created-by">Created by: {user ? user.username : 'No User'}</div>
+      <div className="playlist-details-buttons">
         {currentUser.id === user?.id && (
-          <div>
-            <button onClick={toggleAddSongs}>
-              {addSongsVisible ? 'Hide Add Songs' : 'Add Songs'}
-            </button>
-          </div>
+          <button className="playlist-details-add-button" onClick={toggleAddSongs}>
+            {addSongsVisible ? 'Hide Add Songs' : 'Add Songs'}
+          </button>
         )}
       </div>
-      <div>
-        Wins: {wins} Losses: {losses}
+      <div className="playlist-details-stats">
+        <div className="playlist-details-wins">Wins: {wins}</div>
+        <div className="playlist-details-losses">Losses: {losses}</div>
       </div>
-      <ol>
+      <ol className="playlist-details-song-list">
         {playlistSongs
           ? playlistSongs.map((playlistSong) => (
-              <li key={playlistSong.id}>
-                {playlistSong.Song.name} - {playlistSong.Song.artist}
+              <li key={playlistSong.id} className="playlist-details-song-item">
+                <div className="playlist-details-song-name">{playlistSong.Song.name}</div>
+                <div className="playlist-details-song-artist">{playlistSong.Song.artist}</div>
                 {addSongsVisible && (
-                  <button onClick={() => handleRemoveSong(playlistSong)}>Remove</button>
+                  <button className="playlist-details-remove-button" onClick={() => handleRemoveSong(playlistSong)}>Remove</button>
                 )}
               </li>
             ))
           : <div></div>}
       </ol>
       {addSongsVisible && (
-        <div>
-          {playlistSongs.length >= 10 && <div>Maximum Songs</div>}
-          {playlistSongs.length < 10 && <div>Add Additional Songs</div>}
-          {renderAddSongs()}
+        <div className="playlist-details-add-songs-container">
+          {playlistSongs.length >= 10 && <div className="playlist-details-max-songs">Maximum Songs</div>}
+          {playlistSongs.length < 10 && (
+            <div className="playlist-details-additional-songs">Add Additional Songs</div>
+          )}
+          <div className="playlist-details-additional-song-list">{renderAddSongs()}
+          </div>
         </div>
       )}
     </div>
   );
+
+
+
+
 
 }
 
