@@ -861,7 +861,7 @@ input[type='text'] {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  border: 2px solid #007bff;
+  border: 10px solid #007bff;
   margin: 10px;
 }
 
@@ -935,7 +935,8 @@ button[type='submit']:hover {
   font-size: 20px;
   margin-bottom: 10px;
   display: flex;
-  justify-content: space-between;
+  border: 10px solid #ced4da;
+  /* justify-content: space-between; */
   align-items: center;
   background-color: #f7f7f7;
   padding: 10px;
@@ -967,20 +968,18 @@ button[type='submit']:hover {
   font-size: x-large;
   margin-left: 30%;
   margin-right: 30%;
+  margin-bottom: 20px;
 }
 
-/* .playlist-details-additional-songs h3 {
-  font-size: 200px;
-  font-weight: bold;
-  color: yellow;
-  margin-bottom: 10px;
-} */
+.playlist-song-info button.playlist-song-add {
+  margin-left: auto;
+}
 
 .playlist-details-search-input {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ced4da;
+  border: 10px solid #ced4da;
   margin-bottom: 10px;
   font-size: 16px;
 }
@@ -989,9 +988,10 @@ button[type='submit']:hover {
   list-style: none;
   margin: 0;
   padding: 0;
+
 }
 
-.playlist-details-additional-song-list li {
+.playlist-details-additional-song-list  {
   font-size: 20px;
   margin-bottom: 10px;
   display: flex;
@@ -1017,3 +1017,75 @@ button[type='submit']:hover {
   background-color: #0062cc;
 }
 
+.playlist-song-info {
+  display: flex;
+  align-items: center;
+  flex: 1; /* add this line */
+  margin-top: 10px;
+  padding: 10px; /* add this line */
+}
+
+.playlist-song-info .playlist-song-name {
+  color: #007bff;
+  font-weight: bold;
+  font-size: x-large;
+  margin-right: 10px;
+}
+
+.playlist-song-info .playlist-song-artist {
+  margin-left: 10px;
+  font-style: italic;
+  font-size: x-large;
+}
+
+.playlist-details-song-name {
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: x-large
+}
+
+.playlist-details-song-artist {
+  margin-left: 10px;
+  font-style: italic;
+  font-size: x-large;
+}
+
+.playlist-details-song-item {
+  align-content: space-evenly;
+}
+
+.playlist-details-song-list li button.playlist-details-remove-button {
+  margin-left: auto;
+}
+
+.playlist-add-songs-list li {
+  border: 10px solid #ced4da; /* add this line */
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  /* padding: 10px; */
+}
+
+.playlist-add-songs-title {
+  font-size: xx-large;
+}
+
+.playlist-details-done-button{
+  background-color: grey;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-radius: 5px;
+
+}
+
+
+.playlist-details-done-button:hover {
+  background-color: yellow;
+}

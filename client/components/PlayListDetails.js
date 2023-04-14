@@ -64,25 +64,26 @@ function PlayListDetails() {
     );
     return (
       <div className="playlist-add-songs-container">
-        <h3 className="playlist-add-songs-title">Add Songs:</h3>
         <input
           type="text"
           placeholder="Search songs..."
           value={searchText}
           onChange={handleSearchChange}
         />
+
+        <h3 className="playlist-add-songs-title">Add Songs:</h3>
         {filteredSongs.length === 0 && <div>No Results</div>}
         {filteredSongs.length > 0 && (
           <ul className="playlist-add-songs-list">
             {filteredSongs.map((song) => (
               <li key={song.id}>
                 <div className="playlist-song-info">
-                  <span className="playlist-song-name">{song.name}</span>
+                  <span className="playlist-song-name">{song.name}</span> by
                   <span className="playlist-song-artist">{song.artist}</span>
-                </div>
-                <button className="playlist-song-add" onClick={() => handleSelectSong(song)}>
-                  Add
+                  <button className="playlist-song-add" onClick={() => handleSelectSong(song)}>
+                  Add to Playlist
                 </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -111,7 +112,7 @@ function PlayListDetails() {
           ? playlistSongs.map((playlistSong) => (
               <li key={playlistSong.id} className="playlist-details-song-item">
                 <div className="playlist-details-song-name">{playlistSong.Song.name}</div>
-                <div className="playlist-details-song-artist">{playlistSong.Song.artist}</div>
+                <div className="playlist-details-song-artist">by {playlistSong.Song.artist}</div>
                 {addSongsVisible && (
                   <button className="playlist-details-remove-button" onClick={() => handleRemoveSong(playlistSong)}>Remove</button>
                 )}
@@ -121,7 +122,11 @@ function PlayListDetails() {
       </ol>
       {addSongsVisible && (
         <div className="playlist-details-add-songs-container">
-          {playlistSongs.length >= 10 && <div className="playlist-details-max-songs">Maximum Songs</div>}
+          {/* {playlistSongs.length >= 10 && <div className="playlist-details-max-songs">Maximum Songs</div>} */}
+          {playlistSongs.length >= 10 &&
+          <button className="playlist-details-done-button" onClick={toggleAddSongs}>
+            {addSongsVisible ? 'Maximum Songs Playlist Done' : 'Add Songs'}
+          </button>}
           {playlistSongs.length < 10 && (
             <div className="playlist-details-additional-songs">Add Additional Songs</div>
           )}
