@@ -1077,7 +1077,7 @@ button[type='submit']:hover {
   color: #fff;
   border: none;
   padding: 5px 10px;
-  font-size: 16px;
+  font-size: 36px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -1087,5 +1087,35 @@ button[type='submit']:hover {
 
 
 .playlist-details-done-button:hover {
-  background-color: yellow;
+  background-color:  #333;;
 }
+
+.playlist-details-add-button {
+    background-color: green;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border-radius: 5px;
+
+  }
+
+  .playlist-details-add-button:hover {
+    background-color:  greenyellow;
+  }
+
+  .playlist-details-title {
+    text-align: center;
+    font-size: 5rem;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  .playlist-details-created-by, .playlist-details-stats {
+    text-align: center;
+    font-size: x-large;
+  }
+

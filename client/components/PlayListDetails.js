@@ -64,6 +64,7 @@ function PlayListDetails() {
     );
     return (
       <div className="playlist-add-songs-container">
+         <h3 className="playlist-add-songs-title">Add Songs:</h3>
         <input
           type="text"
           placeholder="Search songs..."
@@ -71,7 +72,6 @@ function PlayListDetails() {
           onChange={handleSearchChange}
         />
 
-        <h3 className="playlist-add-songs-title">Add Songs:</h3>
         {filteredSongs.length === 0 && <div>No Results</div>}
         {filteredSongs.length > 0 && (
           <ul className="playlist-add-songs-list">
@@ -94,18 +94,18 @@ function PlayListDetails() {
 
   return (
     <div className="playlist-details-container">
-      <h2 className="playlist-details-title">{name}</h2>
-      <div className="playlist-details-created-by">Created by: {user ? user.username : 'No User'}</div>
+      <h1 className="playlist-details-title">{name}</h1>
+      <h2 className="playlist-details-created-by">Created by: {user ? user.username : 'No User'}</h2>
+      <div className="playlist-details-stats">
+        <h2 className="playlist-details-wins">Wins: {wins}</h2>
+        <h2 className="playlist-details-losses">Losses: {losses}</h2>
+      </div>
       <div className="playlist-details-buttons">
         {currentUser.id === user?.id && (
           <button className="playlist-details-add-button" onClick={toggleAddSongs}>
-            {addSongsVisible ? 'Hide Add Songs' : 'Add Songs'}
+            {addSongsVisible ? 'Hide Add Songs' : 'Edit Playlist'}
           </button>
         )}
-      </div>
-      <div className="playlist-details-stats">
-        <div className="playlist-details-wins">Wins: {wins}</div>
-        <div className="playlist-details-losses">Losses: {losses}</div>
       </div>
       <ol className="playlist-details-song-list">
         {playlistSongs
