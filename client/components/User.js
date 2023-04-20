@@ -14,7 +14,7 @@ function UserPage() {
 
   return (
     <div className="user-page-container">
-      <h1 className="user-page-heading"><u>Users</u></h1>
+      <h1 className="user-page-heading"><u><b>Users</b></u></h1>
       <div className="user-card-container">
         {users.map((user) => (
           <div key={user.id} className="user-card">

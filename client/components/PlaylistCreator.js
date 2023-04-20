@@ -50,11 +50,11 @@ function PlaylistCreator() {
 
   return (
     <div className="playlist-creator-container">
-      <h1 className="playlist-creator-heading">Create a Playlist</h1>
+      <h1 className="playlist-creator-heading"><u><b>Create a Playlist</b></u></h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Playlist Name:
-          <input type="text" value={playlistName} onChange={handleNameChange} />
+         <h2> Playlist Name: </h2>
+          <input type="text" value={playlistName} placeholder="Enter Playlist Name"  onChange={handleNameChange} />
         </label>
         <div className="playlist-creator-error">
           {nameError && <p>Please Enter A Name</p>}

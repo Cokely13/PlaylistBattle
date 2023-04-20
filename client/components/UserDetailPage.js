@@ -83,6 +83,7 @@ function UserDetailPage() {
             <div className="loading-message">Loading...</div>
           )}
         </div>
+        </div>
         <div className="user-controls">
           <div className="search-container">
             <input
@@ -112,7 +113,7 @@ function UserDetailPage() {
             </div>
           </div>
         </div>
-      </div>
+
       <table className="playlists-table">
         <thead>
           <tr>

@@ -66,6 +66,7 @@ function SongList() {
 
   return (
     <div className="song-list-container">
+      <h1 className="songs-page-heading"><u><b>Songs</b></u></h1>
       {isAddingSong ? (
         <div className="add-song-form">
           <label className="add-song-form-label">

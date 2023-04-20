@@ -20,7 +20,7 @@ function NewPlaylists() {
   return (
     <div className="playlists-container" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <div className="playlists-wrapper">
-        <div className="playlists-header">New Playlists</div>
+        <div className="playlists-header"><u><b>New Playlists</b></u></div>
         <table className="playlists-table">
           <thead>
             <tr>
@@ -48,7 +48,7 @@ function NewPlaylists() {
                   <td className="table-cell-wins">{playlist.wins}</td>
                   <td className="table-cell-losses">{playlist.losses}</td>
                   <td className="table-cell-songs">{playlist.playlistSongs.length}</td>
-                  <td className="table-cell-winPercentage">{winPercentage}</td>
+                  <td className="table-cell-winPercentage">{winPercentage !== NaN ? "N/A" : winPercentage}</td>
                 </tr>
               )
             })}

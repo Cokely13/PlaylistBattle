@@ -73,7 +73,7 @@ function TopPlaylists() {
 
     return (
       <div className="playlists-container">
-        <div className="playlists-header"><u>Records</u></div>
+        <div className="playlists-header"><u><b>Records</b></u></div>
         <div className="search-sort-container">
         <div className="search-container">
         <label>Search:</label>

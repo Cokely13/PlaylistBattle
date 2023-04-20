@@ -111,7 +111,7 @@ function Profile() {
                   <strong>Total Losses: </strong> {getTotalLosses()}
                 </p>
               </div>
-              <div className='search-sort' >
+              <div className='search-sort'>
                 <input
                   type="text"
                   value={searchQuery}
