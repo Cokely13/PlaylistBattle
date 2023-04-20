@@ -92,26 +92,26 @@ function Profile() {
               </div>
               <h1 className="user-email">{user.email}</h1>
               {user.admin ? <h1>ADMIN</h1> : <div></div>}
-            </div>
-          ) : (
-            <div></div>
-          )}
-          {showPlaylists !== 1 ? (
+              {showPlaylists !== 1 ? (
             <button onClick={handleShowPlaylists}>Show Playlists</button>
           ) : (
             <button onClick={handleHidePlaylists}>Hide Playlists</button>
           )}
+            </div>
+          ) : (
+            <div></div>
+          )}
           {showPlaylists == 1 ? (
             <div>
               <div className="user-stats">
-                <p>
-                  <strong>Total Wins:</strong> {getTotalWins()}
+                <p className='total-wins'>
+                  <strong >Total Wins: </strong> {getTotalWins()}
                 </p>
                 <p>
-                  <strong>Total Losses:</strong> {getTotalLosses()}
+                  <strong>Total Losses: </strong> {getTotalLosses()}
                 </p>
               </div>
-              <div>
+              <div className='search-sort' >
                 <input
                   type="text"
                   value={searchQuery}

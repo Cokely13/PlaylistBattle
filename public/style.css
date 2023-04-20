@@ -68,6 +68,14 @@ box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 z-index: 999;
 }
 
+.search-sort{
+text-align: center;
+}
+
+.add-song-button{
+  text-align: center;
+}
+
 .playlists-table {
 border-collapse: collapse;
 margin: 0 auto; /* Center the table */
@@ -574,6 +582,10 @@ button:hover {
 .voting-details p {
   font-size: 20px;
   margin-bottom: 16px;
+}
+
+.total-wins {
+  margin-right: 10px;
 }
 
 .lets-vote-button {

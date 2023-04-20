@@ -81,7 +81,7 @@ function SongList() {
         </div>
       ) : (
         <div>
-          <div>
+          <div className='search-sort'>
             <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search by name or artist" />
 
             <select value={sortBy} onChange={handleSortChange}>
@@ -90,9 +90,9 @@ function SongList() {
               <option value="artist">Artist</option>
             </select>
           </div>
-
+          <div className='add-song-button'>
           <button onClick={handleAddSongClick}>Add Song</button>
-
+            </div>
           <ul>
             {sortedSongs.map(song => (
               <li key={song.id} className="song-item">
