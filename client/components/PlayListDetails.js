@@ -103,7 +103,7 @@ function PlayListDetails() {
       <div className="playlist-details-buttons">
         {currentUser.id === user?.id && (
           <button className="playlist-details-add-button" onClick={toggleAddSongs}>
-            {addSongsVisible ? 'Hide Add Songs' : 'Edit Playlist'}
+            {addSongsVisible ? 'Done' : 'Edit Playlist'}
           </button>
         )}
       </div>
@@ -130,8 +130,8 @@ function PlayListDetails() {
           {playlistSongs.length < 10 && (
             <div className="playlist-details-additional-songs">Add Additional Songs</div>
           )}
-          <div className="playlist-details-additional-song-list">{renderAddSongs()}
-          </div>
+         {playlistSongs.length < 10 && ( <div className="playlist-details-additional-song-list">{renderAddSongs()}
+          </div>)}
         </div>
       )}
     </div>
