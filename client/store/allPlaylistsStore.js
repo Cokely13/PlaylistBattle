@@ -41,13 +41,33 @@ export const createPlaylist = (playlist) => {
   };
 };
 
-export const deletePlaylist = (id, history) => {
+export const deletePlaylist = (id) => {
   return async (dispatch) => {
     const { data: playlist } = await Axios.delete(`/api/playlists/${id}`);
     dispatch(_deletePlaylist(playlist));
-    history.push("/playlists");
+    // history.push("/playlists");
   };
 };
+
+// export const deletePlaylistAndSongs = (playlistId) => async (dispatch, getState) => {
+//   try {
+//     // Get all playlistSongs with matching playlistId
+//     const playlistSongs = getState().allPsongs.filter(ps => ps.playlistId === playlistId);
+
+//     // Delete all playlistSongs first
+//     for (const ps of playlistSongs) {
+//       await dispatch(deletePsong(ps.id));
+//     }
+
+//     // Then delete the playlist
+//     await axios.delete(`/api/playlists/${playlistId}`);
+
+//     // Dispatch the delete playlist action
+//     dispatch(deletePlaylistSuccess(playlistId));
+//   } catch (error) {
+//     dispatch(deletePlaylistFailure(error.message));
+//   }
+// };
 
 
 const initialState = [];

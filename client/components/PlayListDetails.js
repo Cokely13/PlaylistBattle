@@ -1,10 +1,9 @@
-
-
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPlaylist } from '../store/singlePlaylistStore';
 import { fetchSongs } from '../store/allSongsStore';
+import { deletePlaylist} from '../store/allPlaylistsStore'
 import { createPsong, deletePsong } from '../store/allPsongsStore';
 import Pagination from './Pagination'
 
@@ -19,6 +18,8 @@ function PlayListDetails() {
   const [selectedSong, setSelectedSong] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 20;
+  const history = useHistory();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   useEffect(() => {
     dispatch(fetchPlaylist(playlistId));
@@ -33,6 +34,8 @@ function PlayListDetails() {
   const toggleAddSongs = () => {
     setAddSongsVisible(!addSongsVisible);
   };
+
+
 
   const handleSelectSong = (song) => {
     if (playlistSongs.length >= 10) {
@@ -58,6 +61,16 @@ function PlayListDetails() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleDeletePlaylist = () => {
+    const confirmDelete = window.confirm('Delete Playlist?');
+    if (confirmDelete) {
+      dispatch(deletePlaylist(playlistId))
+      // Dispatch delete action and redirect to home page
+      // You may want to change this to redirect to another page depending on your app
+      history.push('/playlists');
+    }
   };
 
   const renderAddSongs = () => {
@@ -117,58 +130,86 @@ function PlayListDetails() {
         )}
       </div>
     );
-  };
+  }
 
-  return (
-    <div className="playlist-details-container">
-      <h1 className="playlist-details-title">{name}</h1>
-      <h2 className="playlist-details-created-by">Created by: {user ? user.username : 'No User'}</h2>
-      <div className="playlist-details-stats">
-        <h2 className="playlist-details-wins">Wins: {wins}</h2>
-        <h2 className="playlist-details-losses">Losses: {losses}</h2>
-      </div>
-      <div className="playlist-details-buttons">
-        {currentUser.id === user?.id && (
-          <button className="playlist-details-add-button" onClick={toggleAddSongs}>
-            {addSongsVisible ? 'Done' : 'Edit Playlist'}
-          </button>
-        )}
-      </div>
-      <ol className="playlist-details-song-list">
-        {playlistSongs
-          ? playlistSongs.map((playlistSong) => (
-              <li key={playlistSong.id} className="playlist-details-song-item">
-                <div className="playlist-details-song-name">{playlistSong.Song.name}</div>
-                <div className="playlist-details-song-artist">by {playlistSong.Song.artist}</div>
+    return (
+      <div className="playlist-details-container">
+        <h1 className="playlist-details-title">{name}</h1>
+        <h2 className="playlist-details-created-by">
+          Created by: {user ? user.username : "No User"}
+        </h2>
+        <div className="playlist-details-stats">
+          <h2 className="playlist-details-wins">Wins: {wins}</h2>
+          <h2 className="playlist-details-losses">Losses: {losses}</h2>
+        </div>
+        <div className="playlist-details-buttons">
+          {currentUser.id === user?.id && (
+            <button
+              className="playlist-details-add-button"
+              onClick={toggleAddSongs}
+            >
+              {addSongsVisible ? "Done" : "Edit Playlist"}
+            </button>
+          )}
+        </div>
+        <ol className="playlist-details-song-list">
+          {playlistSongs ? (
+            playlistSongs.map((playlistSong) => (
+              <li
+                key={playlistSong.id}
+                className="playlist-details-song-item"
+              >
+                <div className="playlist-details-song-name">
+                  {playlistSong.Song.name}
+                </div>
+                <div className="playlist-details-song-artist">
+                  by {playlistSong.Song.artist}
+                </div>
                 {addSongsVisible && (
-                  <button className="playlist-details-remove-button" onClick={() => handleRemoveSong(playlistSong)}>Remove</button>
+                  <button
+                    className="playlist-details-remove-button"
+                    onClick={() => handleRemoveSong(playlistSong)}
+                  >
+                    Remove
+                  </button>
                 )}
               </li>
             ))
-          : <div></div>}
-      </ol>
-      {addSongsVisible && (
-        <div className="playlist-details-add-songs-container">
-          {/* {playlistSongs.length >= 10 && <div className="playlist-details-max-songs">Maximum Songs</div>} */}
-          {playlistSongs.length >= 10 &&
-          <button className="playlist-details-done-button" onClick={toggleAddSongs}>
-            {addSongsVisible ? 'Maximum Songs Playlist Done' : 'Add Songs'}
-          </button>}
-          {playlistSongs.length < 10 && (
-            <div className="playlist-details-additional-songs">Add Additional Songs</div>
+          ) : (
+            <div></div>
           )}
-         {playlistSongs.length < 10 && ( <div className="playlist-details-additional-song-list">{renderAddSongs()}
-          </div>)}
-        </div>
-      )}
-    </div>
-  );
-
-
-
-
+        </ol>
+        {currentUser.id === user?.id && (
+  <button
+    className="playlist-details-delete-button"
+    onClick={handleDeletePlaylist}
+    style={{ display: addSongsVisible ? "none" : "block", margin: "0 auto", backgroundColor: "red", border: "black" }}
+  >
+    Delete Playlist
+  </button>
+)}
+        {addSongsVisible && (
+          <div className="playlist-details-add-songs-container">
+            {playlistSongs.length >= 10 && (
+              <button className="playlist-details-done-button" onClick={toggleAddSongs}>
+                {addSongsVisible ? "Maximum Songs Playlist Done" : "Add Songs"}
+              </button>
+            )}
+            {playlistSongs.length < 10 && (
+              <div className="playlist-details-additional-songs">
+                Add Additional Songs
+              </div>
+            )}
+            {playlistSongs.length < 10 && (
+              <div className="playlist-details-additional-song-list">
+                {renderAddSongs()}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
 
 }
 
 export default PlayListDetails;
-

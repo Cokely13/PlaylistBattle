@@ -927,6 +927,7 @@ button[type='submit']:hover {
 .playlist-details-container {
   max-width: 800px;
   margin: auto;
+  align-items: center;
 }
 
 .playlist-details-header {
