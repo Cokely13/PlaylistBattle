@@ -46,21 +46,49 @@ function EditProfile({ user, fetchUser, setShowEdit }) {
     setShowEdit(false);
   };
 
+  // return (
+  //   <form className="edit-profile-form" onSubmit={handleSubmit}>
+  //     <h2>Edit Profile</h2>
+  //     <label htmlFor="username">Username:</label>
+  //     <input type="text" id="username" value={username} onChange={handleUsernameChange} />
+
+  //     <label htmlFor="email">Email:</label>
+  //     <input type="email" id="email" value={email} onChange={handleEmailChange} />
+
+  //     <label htmlFor="password">Password:</label>
+  //     <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+
+  //     <label htmlFor="confirmPassword">Confirm Password:</label>
+  //     <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+  //     <button type="submit">Save Changes</button>
+  //   </form>
+  // );
   return (
     <form className="edit-profile-form" onSubmit={handleSubmit}>
-      <h2>Edit Profile</h2>
-      <label htmlFor="username">Username:</label>
-      <input type="text" id="username" value={username} onChange={handleUsernameChange} />
+      <h1><u><b>Edit Profile</b></u></h1>
+      <div className="input-group">
+        <label htmlFor="username">Username:</label>
+        <input type="text" id="username" value={username} onChange={handleUsernameChange} />
+      </div>
 
-      <label htmlFor="email">Email:</label>
-      <input type="email" id="email" value={email} onChange={handleEmailChange} />
+      <div className="input-group">
+        <label htmlFor="email">Email:</label>
+        <input type="email" id="email" value={email} onChange={handleEmailChange} />
+      </div>
 
-      <label htmlFor="password">Password:</label>
-      <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+      <div className="input-group">
+        <label htmlFor="password">Password:</label>
+        <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+      </div>
 
-      <label htmlFor="confirmPassword">Confirm Password:</label>
-      <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} />
-      <button type="submit">Save Changes</button>
+      <div className="input-group">
+        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+      </div>
+
+      <div className="button-wrapper">
+        <button type="submit">Save Changes</button>
+      </div>
     </form>
   );
 }

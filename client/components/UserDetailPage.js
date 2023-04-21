@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchSingleUser } from '../store/singleUserStore';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaSort } from 'react-icons/fa';
 
 function UserDetailPage() {
   const dispatch = useDispatch();
@@ -69,6 +68,7 @@ function UserDetailPage() {
         <div className="user-info">
           {user ? (
             <>
+            <div className="user-test">
               <h1 className="user-name">{user.username}</h1>
               <div className="user-stats">
                 <p className="user-stat">
@@ -77,6 +77,7 @@ function UserDetailPage() {
                 <p className="user-stat">
                   <strong>Total Losses:</strong> {getTotalLosses()}
                 </p>
+              </div>
               </div>
             </>
           ) : (
@@ -93,9 +94,6 @@ function UserDetailPage() {
               placeholder="Search playlists by name"
               className="search-input"
             />
-            <div className="search-icon">
-              <FaSearch />
-            </div>
           </div>
           <div className="sort-container">
             <select
@@ -108,9 +106,6 @@ function UserDetailPage() {
               <option value="wins">Wins</option>
               <option value="losses">Losses</option>
             </select>
-            <div className="sort-icon">
-              <FaSort />
-            </div>
           </div>
         </div>
 

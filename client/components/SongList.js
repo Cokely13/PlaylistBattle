@@ -10,6 +10,8 @@ function SongList() {
   const [isAddingSong, setIsAddingSong] = useState(false);
   const [newSongName, setNewSongName] = useState('');
   const [newSongArtist, setNewSongArtist] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const allSongs = useSelector((state) => state.allSongs);
 
   useEffect(() => {
@@ -64,6 +66,15 @@ function SongList() {
     setIsAddingSong(false);
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const pageCount = Math.ceil(sortedSongs.length / pageSize);
+  const pageRange = [...Array(pageCount).keys()].map(i => i + 1);
+
+  const paginatedSongs = sortedSongs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
   return (
     <div className="song-list-container">
       <h1 className="songs-page-heading"><u><b>Songs</b></u></h1>
@@ -92,15 +103,46 @@ function SongList() {
             </select>
           </div>
           <div className='add-song-button'>
-          <button onClick={handleAddSongClick}>Add Song</button>
-            </div>
+            <button onClick={handleAddSongClick}>Add Song</button>
+          </div>
           <ul>
-            {sortedSongs.map(song => (
+            {paginatedSongs.map(song => (
               <li key={song.id} className="song-item">
                 <u><b>{song.name}</b></u> by {song.artist}
               </li>
             ))}
           </ul>
+          <div className="pagination">
+  <ul>
+    {currentPage > 1 && (
+      <>
+        <li>
+          <button onClick={() => handlePageChange(1)}>First</button>
+        </li>
+        <li>
+          <button onClick={() => handlePageChange(currentPage - 1)}>Back</button>
+        </li>
+      </>
+    )}
+
+    {pageRange.map(page => (
+      <li key={page} className={currentPage === page ? 'active' : ''}>
+        <button onClick={() => handlePageChange(page)}>{page}</button>
+      </li>
+    )).slice(currentPage - 1, currentPage + 4)}
+
+    {currentPage < pageCount && (
+      <>
+        <li>
+          <button onClick={() => handlePageChange(currentPage + 1)}>Forward</button>
+        </li>
+        <li>
+          <button onClick={() => handlePageChange(pageCount)}>Last</button>
+        </li>
+      </>
+    )}
+  </ul>
+</div>
         </div>
       )}
     </div>

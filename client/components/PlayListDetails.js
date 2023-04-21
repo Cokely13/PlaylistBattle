@@ -65,7 +65,7 @@ function PlayListDetails() {
     return (
       <div className="playlist-add-songs-container">
          <h3 className="playlist-add-songs-title">Add Songs:</h3>
-        <input
+        <input className="playlist-add-search"
           type="text"
           placeholder="Search songs..."
           value={searchText}
