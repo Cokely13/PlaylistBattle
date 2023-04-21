@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchPlaylist } from '../store/singlePlaylistStore';
 import { fetchSongs } from '../store/allSongsStore';
 import { createPsong, deletePsong } from '../store/allPsongsStore';
+import Pagination from './Pagination'
 
 function PlayListDetails() {
   const { playlistId } = useParams();
@@ -16,6 +17,8 @@ function PlayListDetails() {
   const currentUser = useSelector((state) => state.auth);
   const [addSongsVisible, setAddSongsVisible] = useState(false);
   const [selectedSong, setSelectedSong] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 20;
 
   useEffect(() => {
     dispatch(fetchPlaylist(playlistId));
@@ -53,6 +56,10 @@ function PlayListDetails() {
     setSearchText(event.target.value);
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   const renderAddSongs = () => {
     const songsToAdd = allSongs.filter(
       (song) => !playlistSongs.some((ps) => ps.Song.id === song.id)
@@ -62,10 +69,19 @@ function PlayListDetails() {
         song.name.toLowerCase().includes(searchText.toLowerCase()) ||
         song.artist.toLowerCase().includes(searchText.toLowerCase())
     );
+
+    const totalSongs = filteredSongs.length;
+    const pageCount = Math.ceil(totalSongs / pageSize);
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const paginatedSongs = filteredSongs.slice(startIndex, endIndex);
+
     return (
       <div className="playlist-add-songs-container">
-         <h3 className="playlist-add-songs-title">Add Songs:</h3>
-        <input className="playlist-add-search"
+        <h3 className="playlist-add-songs-title">Add Songs:</h3>
+        <input
+          className="playlist-add-search"
           type="text"
           placeholder="Search songs..."
           value={searchText}
@@ -74,19 +90,30 @@ function PlayListDetails() {
 
         {filteredSongs.length === 0 && <div>No Results</div>}
         {filteredSongs.length > 0 && (
-          <ul className="playlist-add-songs-list">
-            {filteredSongs.map((song) => (
-              <li key={song.id}>
-                <div className="playlist-song-info">
-                  <span className="playlist-song-name">{song.name}</span> by
-                  <span className="playlist-song-artist">{song.artist}</span>
-                  <button className="playlist-song-add" onClick={() => handleSelectSong(song)}>
-                  Add to Playlist
-                </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <ul className="playlist-add-songs-list">
+              {paginatedSongs.map((song) => (
+                <li key={song.id}>
+                  <div className="playlist-song-info">
+                    <span className="playlist-song-name">{song.name}</span> by
+                    <span className="playlist-song-artist">{song.artist}</span>
+                    <button
+                      className="playlist-song-add"
+                      onClick={() => handleSelectSong(song)}
+                    >
+                      Add to Playlist
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <Pagination
+              currentPage={currentPage}
+              pageCount={pageCount}
+              onPageChange={handlePageChange}
+            />
+          </div>
         )}
       </div>
     );
