@@ -100,7 +100,7 @@ function AllPlaylists() {
         <div className="sort-container">
           <label htmlFor="sort-select">Sort by:</label>
           <select id="sort-select" value={sortOption} onChange={handleSortOptionChange}>
-            <option value="name">Name</option>
+            <option value="name">Playlist Name</option>
             <option value="createdBy">Created By</option>
             <option value="wins">Wins</option>
             <option value="losses">Losses</option>
@@ -114,7 +114,7 @@ function AllPlaylists() {
       <table className="playlists-table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Playlist Name</th>
             <th>Created By</th>
             <th>Wins</th>
             <th>Losses</th>

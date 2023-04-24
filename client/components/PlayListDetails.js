@@ -83,12 +83,10 @@ function PlayListDetails() {
         song.artist.toLowerCase().includes(searchText.toLowerCase())
     );
 
-    const totalSongs = filteredSongs.length;
-    const pageCount = Math.ceil(totalSongs / pageSize);
+    const pageCount = Math.ceil(filteredSongs.length / pageSize);
+    const pageRange = [...Array(pageCount).keys()].map(i => i + 1);
 
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const paginatedSongs = filteredSongs.slice(startIndex, endIndex);
+    const paginatedSongs = filteredSongs.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
     return (
       <div className="playlist-add-songs-container">
@@ -120,12 +118,37 @@ function PlayListDetails() {
                 </li>
               ))}
             </ul>
+            <div className="pagination">
+  <ul>
+    {currentPage > 1 && (
+      <>
+        <li>
+          <button onClick={() => handlePageChange(1)}>First</button>
+        </li>
+        <li>
+          <button onClick={() => handlePageChange(currentPage - 1)}>Back</button>
+        </li>
+      </>
+    )}
 
-            <Pagination
-              currentPage={currentPage}
-              pageCount={pageCount}
-              onPageChange={handlePageChange}
-            />
+    {pageRange.map(page => (
+      <li key={page} className={currentPage === page ? 'active' : ''}>
+        <button onClick={() => handlePageChange(page)}>{page}</button>
+      </li>
+    )).slice(currentPage - 1, currentPage + 4)}
+
+    {currentPage < pageCount && (
+      <>
+        <li>
+          <button onClick={() => handlePageChange(currentPage + 1)}>Forward</button>
+        </li>
+        <li>
+          <button onClick={() => handlePageChange(pageCount)}>Last</button>
+        </li>
+      </>
+    )}
+  </ul>
+</div>
           </div>
         )}
       </div>

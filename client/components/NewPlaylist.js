@@ -24,7 +24,7 @@ function NewPlaylists() {
         <table className="playlists-table">
           <thead>
             <tr>
-              <th className="table-header-name">Name</th>
+              <th className="table-header-name">Playlist Name</th>
               <th className="table-header-created-by">Created By</th>
               <th className="table-header-date-created">Date Created</th>
               <th className="table-header-wins">Wins</th>
