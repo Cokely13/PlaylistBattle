@@ -4,7 +4,7 @@ const { models: { User, Playlist } } = require('../db');
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
-      attributes: ['id', 'username', 'email', 'admin'],
+      attributes: ['id', 'username','email','admin'],
       include: [Playlist],
     });
     res.json(users);

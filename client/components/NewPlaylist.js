@@ -35,7 +35,7 @@ function NewPlaylists() {
           </thead>
           <tbody>
             {newestPlaylists && newestPlaylists.map((playlist) => {
-              const winPercentage = ((playlist.wins / (playlist.wins + playlist.losses)) * 100).toFixed(2) + '%';
+              const winPercentage = ((playlist.wins / (playlist.wins + playlist.losses)) * 100).toFixed(0);
               return (
                 <tr key={playlist.id} className="playlist-row">
                   <td className="table-cell-name">
@@ -48,7 +48,7 @@ function NewPlaylists() {
                   <td className="table-cell-wins">{playlist.wins}</td>
                   <td className="table-cell-losses">{playlist.losses}</td>
                   <td className="table-cell-songs">{playlist.playlistSongs.length}</td>
-                  <td className="table-cell-winPercentage">{winPercentage !== NaN ? "N/A" : winPercentage}</td>
+                  <td className="table-cell-winPercentage">{winPercentage == 'NaN' ? "N/A" : winPercentage + "%"}</td>
                 </tr>
               )
             })}
